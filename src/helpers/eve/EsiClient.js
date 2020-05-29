@@ -1,9 +1,15 @@
 'use strict';
+//material-ui
 
+//local
+import appProperties from './../../../resources/properties';
+
+//react / electron
 import rp from 'request-promise-native';
 import log from 'electron-log';
 
-import appProperties from './../../../resources/properties';
+//---------------------------------end imports---------------------------------
+
 
 export default class EsiClient {
 

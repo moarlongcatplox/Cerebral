@@ -1,4 +1,13 @@
+'use strict';
+//material-ui
+
+//local
 import appProperties from './../../resources/properties';
+
+//react
+
+//---------------------------------end imports---------------------------------
+
 
 const fs = require('fs');
 const xml2js = require('xml2js');

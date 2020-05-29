@@ -1,20 +1,25 @@
 'use strict';
+//material-ui
 
-import Store from 'electron-store';
-
+//local
 import EsiClient from '../helpers/eve/EsiClient';
 import TypeHelper from '../helpers/TypeHelper';
 import StationHelper from '../helpers/StationHelper';
 import StructureHelper from '../helpers/StructureHelper';
 import SystemHelper from '../helpers/SystemHelper';
 import AuthorizedCharacter from './AuthorizedCharacter';
-
 import appProperties from '../../resources/properties';
 import alphaSkillSet from '../../resources/alpha_skill_set';
 import DateTimeHelper from '../helpers/DateTimeHelper';
 import BulkIdResolver from '../helpers/BulkIdResolver';
 import LocationHelper from '../helpers/LocationHelper';
 import MailBodyHelper from '../helpers/MailBodyHelper';
+
+//react
+import Store from 'electron-store';
+
+//---------------------------------end imports---------------------------------
+
 
 let subscribedComponents = [];
 let characters;

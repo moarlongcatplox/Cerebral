@@ -1,16 +1,23 @@
 'use strict';
+//material-ui
+import { red, green } from '@material-ui/core/colors';
+const red500=red[500];
+const green600=green[600];
 
-import React from 'react';
-
-import { red500, green600 } from 'material-ui/styles/colors';
-import SortableTree from 'react-sortable-tree';
-
-
+//local
 import AllSkills from '../../../resources/all_skills';
 import CharacterModel from '../../models/Character';
 import DateHelper from '../../helpers/DateTimeHelper';
 import PlanCharacter from '../../models/PlanCharacter';
 
+//react
+import React from 'react';
+
+//---------------------------------end imports---------------------------------
+
+
+//Remove all of the sortable tree stuff - maybe find a replacement?
+//import SortableTree from 'react-sortable-tree';
 export default class SkillTree extends React.Component {
     constructor(props) {
         super(props);

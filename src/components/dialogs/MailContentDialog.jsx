@@ -1,7 +1,13 @@
 'use strict';
+//material-ui
+import { Avatar, Chip, Dialog, Button, Icon, List, ListItem, Paper } from '@material-ui/core'
 
+//local
+
+//react
 import React from 'react';
-import { Avatar, Chip, Dialog, FlatButton, FontIcon, List, ListItem, Paper } from 'material-ui';
+
+//---------------------------------end imports---------------------------------
 
 
 const styles = {
@@ -62,10 +68,10 @@ export default class MainContentDialog extends React.Component {
                 return <Avatar key={id} style={styles.avatar} size={32} src={`https://image.eveonline.com/Alliance/${id}_32.png`} />;
                 break;
             case 'mailing_list':
-                return <Avatar key={id} style={styles.avatar} size={32} icon={<FontIcon className="material-icons">list</FontIcon>} />;
+                return <Avatar key={id} style={styles.avatar} size={32} icon={<Icon className="material-icons">list</Icon>} />;
                 break;
             default:
-                return <Avatar key={id} style={styles.avatar} size={32} icon={<FontIcon className="material-icons">help</FontIcon>} />;
+                return <Avatar key={id} style={styles.avatar} size={32} icon={<Icon className="material-icons">help</Icon>} />;
         }
     }
 
@@ -75,7 +81,7 @@ export default class MainContentDialog extends React.Component {
         }
 
         const actions = [
-            <FlatButton
+            <Button
                 label="Close"
                 primary={true}
                 onClick={e => this.handleClose(e)}
@@ -139,7 +145,7 @@ export default class MainContentDialog extends React.Component {
                                     (<ListItem
                                         key={index}
                                         primaryText={`${index + 1} - ${link}`}
-                                        rightIcon={<FontIcon className="material-icons">open_in_new</FontIcon>}
+                                        rightIcon={<Icon className="material-icons">open_in_new</Icon>}
                                         onClick={e => {require("electron").shell.openExternal(link); }}
                                     />),
                                     )

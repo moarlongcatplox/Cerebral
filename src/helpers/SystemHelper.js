@@ -1,8 +1,14 @@
 'use strict';
+//material-ui
 
+//local
+import EsiClient from './eve/EsiClient';
+
+//react
 import Store from 'electron-store';
 
-import EsiClient from './eve/EsiClient';
+//---------------------------------end imports---------------------------------
+
 
 let things = undefined;
 const thingsStore = new Store({

@@ -1,14 +1,18 @@
 'use strict';
+//material-ui
 
+//local
 import CharacterHelper from '../helpers/CharacterHelper';
-
-const Store = require('electron-store');
-
 import SsoClient from '../helpers/eve/SsoClient';
 import SsoClientv2 from '../helpers/eve/SsoClientv2';
 import Character from './Character';
-
 import appProperties from '../../resources/properties';
+
+//react
+const Store = require('electron-store');
+
+//---------------------------------end imports---------------------------------
+
 
 let authorizedCharacters;
 const authorizedCharactersStore = new Store({
@@ -44,12 +48,10 @@ class AuthorizedCharacter {
     }
 
     refreshBlocked() {
-        return (
-            (this.lastRefresh.success === false) && // if last refresh was bad and
-            (
-                (this.lastRefresh.shouldRetry === false) || // we're never supposed to retry
-                (new Date(this.lastRefresh.date) > new Date(new Date().getTime() - 300000)) // or we tried in last 5 min
-            )
+        return (this.lastRefresh.success === false) && // if last refresh was bad and
+        (
+            (// we're never supposed to retry
+            (this.lastRefresh.shouldRetry === false || new Date(this.lastRefresh.date) > new Date(new Date().getTime() - 300000))) // or we tried in last 5 min
         );
     }
 

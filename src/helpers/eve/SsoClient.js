@@ -1,11 +1,18 @@
 'use strict';
+//material-ui
 
-import rp from 'request-promise-native';
-import queryString from 'querystring';
-
+//local
 import appProperties from './../../../resources/properties';
 import SettingsHelper from '../SettingsHelper';
+
+
+//react / electron
+import rp from 'request-promise-native';
+import queryString from 'querystring';
 import log from 'electron-log';
+
+//---------------------------------end imports---------------------------------
+
 
 export default class SsoClient {
 

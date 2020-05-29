@@ -1,22 +1,57 @@
 'use strict';
+//material-ui
+import { Box, Grid, Paper, Icon } from '@material-ui/core';
+import {red, green, lightBlue} from '@material-ui/core/colors';
+const red500=red[500];
+const greenA200=green['A200'];
+const lightBlueA200=lightBlue['A200'];
 
-import React from 'react';
-import {Redirect} from 'react-router';
-
+//local
 import Character from '../../models/Character';
 import DateTimeHelper from '../../helpers/DateTimeHelper';
-
-import Avatar from 'material-ui/Avatar';
-import {Table, TableBody, TableRow, TableRowColumn} from 'material-ui/Table';
-import FontIcon from 'material-ui/FontIcon';
-import {red500, greenA200, lightBlueA200} from 'material-ui/styles/colors';
 import AuthorizedCharacter from '../../models/AuthorizedCharacter';
 
+//react
+import React from 'react';
+import { Link } from 'react-router-dom'
+
+//---------------------------------end imports---------------------------------
+
+
 const styles = {
-    charactersTable: {
-        height: '100%',
-        width: '100%'
-    }
+    characterGrid: {
+        textDecoration: 'none',
+        flexGrow: '0',
+        minWidth: '850px',
+        padding: '3px',
+    },
+    characterPaper: {
+        backgroundColor: 'rgba(75, 75, 75, 0.7)',
+        height: '45px',
+      
+    },
+    characterStatusCell: {
+        width: 40, 
+        paddingLeft: 5, 
+        paddingRight: 0
+    },
+    characterNameCell: {
+        color: 'rgb(230, 230, 230)',
+        width: 330,
+        fontSize: 'small',
+    },
+    characterBalanceCell: {
+        color: 'rgb(230, 230, 230)',
+        width: 170,
+        fontSize: 'small',
+    },
+    characterSkillCell: {
+        color: 'rgb(230, 230, 230)',
+        fontSize: 'small',
+        width: 300,
+    },
+
+
 };
 
 export default class CharactersOverviewTable extends React.Component {
@@ -24,23 +59,21 @@ export default class CharactersOverviewTable extends React.Component {
         super(props);
         this.state = {
             characters: Object.values(Character.getAll()).sort((a, b) => b.getTotalSp() - a.getTotalSp()),
-            ticking: true,
-            redirectPath: undefined
+            ticking: true
+            
         };
     }
 
     componentDidMount() {
-        this.timerId = setInterval(
+            this.timerId = setInterval(
             () => this.tick(),
             1000
         );
-
         this.subscriberId = Character.subscribe(this);
     }
 
     componentWillUnmount() {
         clearInterval(this.timerId);
-
         Character.unsubscribe(this.subscriberId);
     }
 
@@ -49,80 +82,40 @@ export default class CharactersOverviewTable extends React.Component {
             this.forceUpdate();
         }
     }
-
-    handleClick(e, characterId) {
-        let path = '/characters/' + characterId;
-
-        this.setState({
-            redirectPath: path
-        });
-    }
-
+    
     render() {
-        if (this.state.redirectPath !== undefined) {
-            this.setState({redirectPath: undefined});
-
-            return <Redirect push to={this.state.redirectPath}/>;
-        }
-
         return (
-            <Table style={styles.charactersTable}>
-                <TableBody displayRowCheckbox={false}>
-                    {this.state.characters.map(char => {
-                        let omegaStatusIconPath = './../resources/';
-                        switch (char.isOmega()) {
-                            case true:
-                                omegaStatusIconPath += 'omega.png';
-                                break;
-                            case false:
-                                omegaStatusIconPath += 'alpha.png';
-                                break;
-                            default:
-                                omegaStatusIconPath = '';
-                        }
-                        const currentSkill = char.getCurrentSkill();
-                        const auth = AuthorizedCharacter.get(char.id);
-
-                        return (
-                            <TableRow key={char.id} selectable={false} onClick={(e) => this.handleClick(e, char.id)}>
-
-                                <TableRowColumn style={{width: '20px'}}>
-                                    <Avatar src={char.portraits.px128x128} style={{marginTop: 5}}/>
-                                </TableRowColumn>
-
-                                <TableRowColumn style={{width: 25, paddingLeft: 20, paddingRight: 0}}>
-                                    <FontIcon className="material-icons" color={auth.lastRefresh.success !== false ? (auth.ssoVersion === 2 ? greenA200 : lightBlueA200) : red500} style={{marginTop: 5}}>
-                                        {auth.lastRefresh.success !== false ? 'check_circle' : 'warning'}
-                                    </FontIcon>
-                                </TableRowColumn>
-
-                                <TableRowColumn style={{width: '20px'}}>
-                                    <img src={omegaStatusIconPath} style={{marginTop: 5}}/>
-                                </TableRowColumn>
-
-                                <TableRowColumn style={{width: '20px'}}>
-                                    <img src={`https://image.eveonline.com/Corporation/${char.corporation_id}_64.png`} width={35} style={{marginTop: 7}}/>
-                                </TableRowColumn>
-
-                                <TableRowColumn>
-                                    {char.name}<br/>
-                                    {char.corporation.name} / {char.alliance_id !== undefined ? char.alliance.name : "N/A"}
-                                </TableRowColumn>
-
-                                <TableRowColumn style={{width: 120}}>
-                                    {char.balance.toLocaleString(navigator.language, {maximumFractionDigits: 2})} ISK<br/>
-                                    {char.getTotalSp().toLocaleString(navigator.language, {maximumFractionDigits: 0})} SP
-                                </TableRowColumn>
-
-                                <TableRowColumn>
-                                    {currentSkill !== undefined ? `${currentSkill.skill_name} ${currentSkill.finished_level}` : "Not Training"}<br/>
-                                    {currentSkill !== undefined ? DateTimeHelper.timeUntil(new Date(currentSkill.finish_date)) : ""}
-                                </TableRowColumn>
-                            </TableRow>
-                        );
-                    })}
-                </TableBody>
-            </Table>
-        );
-    }
+        <Grid container spacing={1} direction="column" justify="space-evenly" alignItems="flex-start">
+            {this.state.characters.map(char => {
+                const currentSkill = char.getCurrentSkill();
+                const auth = AuthorizedCharacter.get(char.id);
+                // switched to grids and boxes to get rid of the billion nested tables.
+                // TODO would really like to make the Paper elements elevate when mouseover'd
+                // to indicate that clicking takes you to the character's summary page.
+                return (
+                        <Grid item xs={12} key={char.id} component={Link} to={'/characters/' + char.id} style={styles.characterGrid}>
+                        <Paper style={styles.characterPaper}>
+                        <Box display="flex" flexDirection="row" paddingTop="5px">
+                            <Box style={styles.characterStatusCell}>
+                                <Icon style={{marginTop: 5}}>{auth.lastRefresh.success !== false ? 'check' : 'warning'}</Icon>
+                            </Box>
+                            <Box style={styles.characterNameCell}>
+                                {char.name} <span style={{fontSize: '8px'}}> {char.id}</span><br/>
+                                {char.corporation.name} / {char.alliance_id !== undefined ? char.alliance.name : "N/A"}
+                            </Box>
+                            <Box style={styles.characterBalanceCell}>
+                                {char.balance.toLocaleString(navigator.language, {maximumFractionDigits: 2})} ISK<br/>
+                                {char.getTotalSp().toLocaleString(navigator.language, {maximumFractionDigits: 0})} SP
+                            </Box>
+                            <Box style={styles.characterSkillCell}>
+                                {currentSkill !== undefined ? `${currentSkill.skill_name} ${currentSkill.finished_level}` : "Not Training"}<br/>
+                                {currentSkill !== undefined ? DateTimeHelper.timeUntil(new Date(currentSkill.finish_date)) : ""}
+                            </Box>
+                        </Box>
+                        </Paper>
+                        </Grid>
+                    );
+                })}
+        </Grid> 
+    )}
 }

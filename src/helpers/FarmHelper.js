@@ -1,14 +1,21 @@
 'use strict';
+//material-ui
 
+//local
 import FarmCharacter from '../models/FarmCharacter';
 
+//react
+
+//---------------------------------end imports---------------------------------
+
+
 export default class FarmHelper {
-    static addFarm(id, baseSp) {
+    static addFarm(id, accountName, baseSp) {
         if (baseSp < 5000000) {
             baseSp = 5000000;
         }
 
-        let character = new FarmCharacter(id, baseSp);
+        let character = new FarmCharacter(id, accountName, baseSp);
         character.save();
     }
 

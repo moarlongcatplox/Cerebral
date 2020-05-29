@@ -1,11 +1,16 @@
 'use strict';
+//material-ui
+import { Icon, List, ListItem, TextField } from '@material-ui/core'
 
-import React from 'react';
-
-import { FontIcon, List, ListItem, TextField } from 'material-ui';
-
+//local
 import AllSkills from '../../../resources/all_skills';
 import Character from '../../models/Character';
+
+//react
+import React from 'react';
+
+//---------------------------------end imports---------------------------------
+
 
 const styles = {
     skillFilter: {
@@ -146,7 +151,7 @@ export class SkillList extends React.Component {
                                     primaryText={skill.name}
                                     onClick={(e) => this.handleSkillListSelection(skill.type_id, e)}
                                     rightIcon={
-                                        <FontIcon style={{ fontSize: 18 }}>{romanNumerals[skillLevel]}</FontIcon>
+                                        <Icon style={{ fontSize: 18 }}>{romanNumerals[skillLevel]}</Icon>
                                     }
                                 />,
                             );
@@ -168,7 +173,7 @@ export class SkillList extends React.Component {
                                     primaryText={skill.name}
                                     onClick={(e) => this.handleSkillListSelection(skill.type_id, e)}
                                     rightIcon={
-                                        <FontIcon style={{ fontSize: 18 }}>{romanNumerals[skillLevel]}</FontIcon>
+                                        <Icon style={{ fontSize: 18 }}>{romanNumerals[skillLevel]}</Icon>
                                     }
                                 />,
                             );
@@ -196,7 +201,7 @@ export class SkillList extends React.Component {
                             primaryText={skill.name}
                             onClick={(e) => this.handleSkillListSelection(skill.type_id, e)}
                             rightIcon={
-                                <FontIcon style={{ 'fontSize': 18 }}>{romanNumerals[skillLevel]}</FontIcon>
+                                <Icon style={{ 'fontSize': 18 }}>{romanNumerals[skillLevel]}</Icon>
                             }
                         />,
                     );

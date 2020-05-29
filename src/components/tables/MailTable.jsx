@@ -1,15 +1,19 @@
 'use strict';
+//material-ui
+import { Icon, IconButton } from '@material-ui/core'
 
-import React from 'react';
-
-import ReactTable from 'react-table';
-import { FontIcon, IconButton } from 'material-ui';
-
+//local
 import MailContentDialog from '../dialogs/MailContentDialog';
+
+//react
+import React from 'react';
+import ReactTable from 'react-table';
+
+//---------------------------------end imports---------------------------------
 
 
 const styles = {
-    fontIcon: {
+    icon: {
         padding: '0 0 0 0',
         margin: '0 0 0 0',
         },
@@ -56,13 +60,13 @@ export default class MailTable extends React.Component {
                 maxWidth: 160,
             },
             {
-                Header: <FontIcon className="material-icons" style={{ fontSize: '16px' }}>mail</FontIcon>,
+                Header: <Icon className="material-icons" style={{ fontSize: '16px' }}>mail</Icon>,
                 headerStyle: {
                     textAlign: 'left',
                 },
                 id: 'is_read',
                 accessor: c => c.is_read,
-                Cell: row => <span>{row.value ? <FontIcon className="material-icons" style={{ fontSize: '16px' }}>drafts</FontIcon> : <FontIcon className="material-icons" style={{fontSize: '16px'}}>mail</FontIcon> }</span>,
+                Cell: row => <span>{row.value ? <Icon className="material-icons" style={{ fontSize: '16px' }}>drafts</Icon> : <Icon className="material-icons" style={{fontSize: '16px'}}>mail</Icon> }</span>,
                 maxWidth: 40,
                
             },
@@ -106,7 +110,7 @@ export default class MailTable extends React.Component {
             },
             Cell: row => (
                 <IconButton style={styles.iconButton} onClick={e => this.setState({ openedMail: mails.find(c => c.mail_id === row.value) })}>
-                    <FontIcon className="material-icons">navigate_next</FontIcon>
+                    <Icon className="material-icons">navigate_next</Icon>
                 </IconButton>
             ),
             width: 30,

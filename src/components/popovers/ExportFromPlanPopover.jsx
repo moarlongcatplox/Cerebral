@@ -1,9 +1,15 @@
-import React from 'react';
-import Popover from 'material-ui/Popover';
-import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
+'use strict';
+//material-ui
+import { Popover, Menu, MenuItem } from '@material-ui/core';
 
+//local
 import ImportExportHelper from '../../helpers/ImportExportHelper';
+
+//react
+import React from 'react';
+
+//---------------------------------end imports---------------------------------
+
 
 const { dialog } = require('electron').remote;
 

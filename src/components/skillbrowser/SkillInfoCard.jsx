@@ -1,12 +1,20 @@
-import React from 'react';
+'use strict';
+//material-ui
+import { Card, CardHeader, CardContent } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
+const grey500=grey[500];
 
-import { Card, CardHeader, CardText } from 'material-ui';
-import {grey500} from 'material-ui/styles/colors';
-
+//local
 import AllSkills from '../../../resources/all_skills';
 import Character from '../../models/Character';
 import DateHelper from '../../helpers/DateTimeHelper';
 import PlanCharacter from '../../models/PlanCharacter';
+
+//react
+import React from 'react';
+
+//---------------------------------end imports---------------------------------
+
 
 const styles = {
     margin10: {
@@ -119,18 +127,18 @@ export default class SkillInfoCard extends React.Component {
                     subtitle={this.skillSubTitle}
                 />
                 {this.trainingTableRows !== undefined ?
-                    <CardText>
+                    <CardContent>
                         {this.skillDescription}
                         <table style={styles.trainingTable}>
                             <tbody>
                                 {this.trainingTableRows}
                             </tbody>
                         </table>
-                    </CardText>
+                    </CardContent>
                     :
-                    <CardText>
+                    <CardContent>
                         {this.skillDescription}
-                    </CardText>
+                    </CardContent>
                 }
             </Card>
         );

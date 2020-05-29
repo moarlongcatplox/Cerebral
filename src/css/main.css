@@ -1,11 +1,24 @@
 html {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Daytona Pro Light', Verdana, Geneva, Tahoma, sans-serif;
 }
 
+
 body {
-    font-size: 13px;
-    line-height: 20px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 10px;
+    line-height: 15px;
     padding: 0 0 0 0;
     margin: 0 0 0 0;
-    background: #303030;
-}
+    
+    background-color: #000000;
+    background-image: url('../../resources/eclipse_dlp_cover.jpg');
+    background-repeat: no-repeat;
+    color: white;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+  
+  .menubar-btn {
+    -webkit-app-region: no-drag;
+  }
+

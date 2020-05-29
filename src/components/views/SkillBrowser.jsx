@@ -1,16 +1,22 @@
 'use strict';
+//material-ui
+import { Card, Paper, CardHeader, CardContent } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
+const grey500 = grey[500];
 
-import React from 'react';
-
-import { Card, Paper, CardHeader, CardText } from 'material-ui';
-import { grey500 } from 'material-ui/styles/colors';
-
+//local
 import CharacterSelector from '../skillbrowser/CharacterSelector';
 import DateHelper from '../../helpers/DateTimeHelper';
 import FilteredSkillList from '../skillbrowser/FilteredSkillList';
 import PlanCharacter from '../../models/PlanCharacter';
 import SkillInfoCard from '../skillbrowser/SkillInfoCard';
 import SkillTree from '../skillbrowser/SkillTree';
+
+
+//react
+import React from 'react';
+
+//---------------------------------end imports---------------------------------
 
 
 const styles = {
@@ -92,11 +98,11 @@ export default class SkillBrowser extends React.Component {
                                             title={'Individual skill breakdown'}
                                             showExpandableButton
                                         />
-                                        <CardText style={styles.margin10} expandable>
+                                        <CardContent style={styles.margin10} expandable>
                                             {
                                                 this.queue.map((s, i) => <span key={i}>{` ${s.name} ${s.level}`}<span style={{ color: grey500 }}>{` ${DateHelper.niceCountdown(s.time)} `}<br /></span></span>)
                                             }
-                                        </CardText>
+                                        </CardContent>
                                     </Card>
                                 }
                             </td>

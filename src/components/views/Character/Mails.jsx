@@ -1,12 +1,16 @@
 'use strict';
+//material-ui
+import { Card, CardHeader, CardContent } from '@material-ui/core';
 
+//local
+import CharacterModel from '../../../models/Character';
+import MailTable from '../../tables/MailTable';
+
+//react
 import React from 'react';
 
-import { Card, CardHeader, CardText } from 'material-ui/Card';
+//---------------------------------end imports---------------------------------
 
-import CharacterModel from '../../../models/Character';
-
-import MailTable from '../../tables/MailTable';
 
 const styles = {
     margin10: {
@@ -44,12 +48,12 @@ export default class Mails extends React.Component {
                     <CardHeader
                         title={`Last Update: ${char.getDataRefreshInfo().find(c => c.type === 'Mails').lastRefresh}`}
                     />
-                    <CardText>
+                    <CardContent>
                         <MailTable
                             mails={mails}
                             complete={true}
                         />
-                    </CardText>
+                    </CardContent>
                 </Card>
             </div>
         );

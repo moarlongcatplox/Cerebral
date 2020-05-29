@@ -1,7 +1,14 @@
 'use strict';
+//material-ui
 
+//local
 import AllSkills from '../../resources/all_skills';
 import Character from '../models/Character';
+
+//react
+
+//---------------------------------end imports---------------------------------
+
 
 class PlanCharacter {
 

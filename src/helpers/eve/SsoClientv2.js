@@ -1,14 +1,18 @@
 'use strict';
+//material-ui
 
+//local
+import AuthorizedCharacter from '../../models/AuthorizedCharacter';
+import appProperties from './../../../resources/properties';
+
+//react
 import rp from 'request-promise-native';
 import queryString from 'querystring';
 import log from 'electron-log';
-
-import AuthorizedCharacter from '../../models/AuthorizedCharacter';
-
-import appProperties from './../../../resources/properties';
-
 import crypto from 'crypto';
+
+//---------------------------------end imports---------------------------------
+
 
 export default class SsoClientv2 {
 

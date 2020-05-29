@@ -1,7 +1,13 @@
 'use strict';
+//material-ui
+import { Dialog, Button, Slider } from '@material-ui/core';
 
+//local
+
+//react
 import React from 'react';
-import { Dialog, FlatButton, Slider } from 'material-ui';
+
+//---------------------------------end imports---------------------------------
 
 
 const styles = {
@@ -101,20 +107,20 @@ export default class RemapDialog extends React.Component {
             <div>
                 {
                     this.props.editIndex !== undefined ?
-                        <FlatButton
+                        <Button
                             label="Use optimal"
                             primary={true}
                             onClick={e => this.handleUseSuggested(e)}
                         />
                         : ''
                 }
-                <FlatButton
+                <Button
                     label="Save"
                     primary={true}
                     onClick={e => this.handleAdd(e)}
                 />
 
-                <FlatButton
+                <Button
                     label="Cancel"
                     primary={true}
                     onClick={e => this.handleClose(e)}

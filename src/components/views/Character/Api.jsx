@@ -1,14 +1,20 @@
 'use strict';
+//material-ui
+import { Card, CardHeader, Icon, CardContent } from '@material-ui/core';
+import { red, green } from '@material-ui/core/colors';
+const red500 = red[500];
+const greenA200 = green['A200'];
 
-import React from 'react';
-
-import {Card, CardHeader, CardText} from 'material-ui/Card';
-import FontIcon from 'material-ui/FontIcon';
-import {red500, greenA200} from 'material-ui/styles/colors';
-
+//local
 import CharacterModel from '../../../models/Character';
 import AuthorizedCharacter from '../../../models/AuthorizedCharacter';
 import DateTimeHelper from '../../../helpers/DateTimeHelper';
+
+//react
+import React from 'react';
+
+//---------------------------------end imports---------------------------------
+
 
 const styles = {
     cardDiv: {
@@ -38,7 +44,7 @@ export default class Api extends React.Component {
                 <div style={styles.cardDiv}>
                     <Card style={styles.card}>
                         <CardHeader title='Scopes Granted'/>
-                        <CardText>
+                        <CardContent>
                             <strong>Note:</strong> If you are missing any scopes, please simply use the Authorize Character button on the character
                             overview and re-add this character.<br/><br/>
 
@@ -47,23 +53,23 @@ export default class Api extends React.Component {
                                     .getScopeInfo()
                                     .map(scope =>
                                         <span key={scope.name}>
-                                            <FontIcon
+                                            <Icon
                                                 style={styles.scopeIcons}
                                                 className='material-icons'
                                                 color={scope.isGranted ? greenA200 : red500}>
                                                 {scope.isGranted ? 'check' : 'clear'}
-                                            </FontIcon> {scope.description}<br/>
+                                            </Icon> {scope.description}<br/>
                                         </span>
                                     )
                             }
-                        </CardText>
+                        </CardContent>
                     </Card>
                 </div>
 
                 <div style={styles.cardDiv}>
                     <Card style={styles.card}>
                         <CardHeader title='API Health'/>
-                        <CardText>
+                        <CardContent>
                             <strong>SSO Version:</strong> v{auth.ssoVersion}<br/>
                             <strong>Token Status:</strong>&nbsp;
                             <span style={{color: authStatus !== false ? greenA200 : red500}}>
@@ -87,12 +93,12 @@ export default class Api extends React.Component {
                                     </div> :
                                     ''
                             }
-                        </CardText>
+                        </CardContent>
                     </Card>
 
                     <Card style={styles.card}>
                         <CardHeader title='Data Refresh'/>
-                        <CardText>
+                        <CardContent>
                             <table width='100%' style={{textAlign: 'right'}}>
                                 <thead>
                                 <tr>
@@ -114,7 +120,7 @@ export default class Api extends React.Component {
                                 }
                                 </tbody>
                             </table>
-                        </CardText>
+                        </CardContent>
                     </Card>
                 </div>
             </div>

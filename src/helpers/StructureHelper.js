@@ -1,9 +1,15 @@
 'use strict';
+//material-ui
 
-import Store from 'electron-store';
-
+//local
 import SystemHelper from './SystemHelper';
 import TypeHelper from './TypeHelper';
+
+//react
+import Store from 'electron-store';
+
+//---------------------------------end imports---------------------------------
+
 
 let things = undefined;
 const thingsStore = new Store({
@@ -23,8 +29,8 @@ export default class StructureHelper {
             (
                 (things[id].hasOwnProperty('failed')) && // or the structure is cached as FAILED
                 (
-                    (!things[id].characterIdsAttempted.includes(clientCharacterId)) || // and a pull hasn't been attempted with this character
-                    (false) // or a pull hasn't been attempted with this character in > 30 days (TODO!)
+                    (// and a pull hasn't been attempted with this character
+                    (!things[id].characterIdsAttempted.includes(clientCharacterId) || false)) // or a pull hasn't been attempted with this character in > 30 days (TODO!)
                 )
             )
         ) {

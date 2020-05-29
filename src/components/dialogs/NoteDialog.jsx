@@ -1,7 +1,13 @@
 'use strict';
+//material-ui
+import { Dialog, Button, TextField } from '@material-ui/core';
 
+//local
+
+//react
 import React from 'react';
-import { Dialog, FlatButton, TextField } from 'material-ui';
+
+//---------------------------------end imports---------------------------------
 
 
 const styles = {
@@ -52,13 +58,13 @@ export default class NoteDialog extends React.Component {
     render() {
         const actions = [
             <div>
-                <FlatButton
+                <Button
                     label="Save"
                     primary={true}
                     onClick={e => this.handleAdd(e)}
                 />
 
-                <FlatButton
+                <Button
                     label="Cancel"
                     primary={true}
                     onClick={e => this.handleClose(e)}

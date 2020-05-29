@@ -1,10 +1,16 @@
 'use strict';
+//material-ui
+import { Icon, IconButton } from '@material-ui/core'
 
-import React from 'react';
-
-import ReactTable from "react-table";
+//local
 import ContractInfoDialog from '../dialogs/ContractInfoDialog';
-import {FontIcon, IconButton} from 'material-ui';
+
+//react
+import React from 'react';
+import ReactTable from "react-table";
+
+//---------------------------------end imports---------------------------------
+
 
 const styles = {
     iconButton: {
@@ -13,7 +19,7 @@ const styles = {
         height: 24,
         width: 24,
     },
-    fontIcon: {
+    icon: {
         padding: '0 0 0 0',
         margin: '0 0 0 0',
     }
@@ -146,7 +152,7 @@ export default class ContractsTable extends React.Component {
             },
             Cell: row => (
                 <IconButton style={styles.iconButton} onClick={e => this.setState({openedContract: contracts.find(c => c.contract_id === row.value)})}>
-                    <FontIcon className="material-icons">navigate_next</FontIcon>
+                    <Icon className="material-icons">navigate_next</Icon>
                 </IconButton>
             ),
             width: 30

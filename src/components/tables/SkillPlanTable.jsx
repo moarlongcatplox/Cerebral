@@ -1,25 +1,18 @@
 'use strict';
+//material-ui
+import { Checkbox, IconButton, Icon, Popover, Table, TableBody, TableHead, TableRow, TableCell, TableFooter } from '@material-ui/core'
 
-import React from 'react';
-
-import {
-    Checkbox,
-    IconButton,
-    FontIcon,
-    Popover,
-    Table,
-    TableBody,
-    TableHeader,
-    TableHeaderColumn,
-    TableRow,
-    TableRowColumn,
-    TableFooter,
-} from 'material-ui';
-
-import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-
+//local
 import DateHelper from '../../helpers/DateTimeHelper';
 import AllSkills from '../../../resources/all_skills';
+
+
+//react
+import React from 'react';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+
+//---------------------------------end imports---------------------------------
+
 
 const styles = {
     planRow: {
@@ -111,34 +104,34 @@ const SortableItem = SortableElement(
                 case 'skill': {
                     return (
                         <TableRow selectable style={style} onMouseDown={this.handleMouseDown}>
-                            <TableRowColumn style={styles.planRowColumnSkill}>
+                            <TableCell style={styles.planRowColumnSkill}>
                                 {this.props.value.title}
-                            </TableRowColumn>
-                            <TableRowColumn style={this.props.columnTime}>
+                            </TableCell>
+                            <TableCell style={this.props.columnTime}>
                                 {DateHelper.niceCountdown(this.props.value.time)}
-                            </TableRowColumn>
-                            <TableRowColumn style={this.props.columnMarketGroup}>
+                            </TableCell>
+                            <TableCell style={this.props.columnMarketGroup}>
                                 {AllSkills.skills[this.props.value.id].market_group_name}
-                            </TableRowColumn>
-                            <TableRowColumn style={this.props.columnAttributes}>
+                            </TableCell>
+                            <TableCell style={this.props.columnAttributes}>
                                 {this.props.value.attributeTitle}
-                            </TableRowColumn>
-                            <TableRowColumn style={this.props.columnSPhs}>
+                            </TableCell>
+                            <TableCell style={this.props.columnSPhs}>
                                 {this.props.value.spHour}
-                            </TableRowColumn>
-                            <TableRowColumn style={this.props.columnLastRemap}>
+                            </TableCell>
+                            <TableCell style={this.props.columnLastRemap}>
                                 {DateHelper.niceCountdown(this.props.value.lastRemap)}
-                            </TableRowColumn>
-                            <TableRowColumn style={styles.planRowColumnEdit}>
-                            </TableRowColumn>
-                            <TableRowColumn style={styles.planRowColumnDelete}>
+                            </TableCell>
+                            <TableCell style={styles.planRowColumnEdit}>
+                            </TableCell>
+                            <TableCell style={styles.planRowColumnDelete}>
                                 <IconButton
                                     style={styles.deleteButton}
                                     iconStyle={styles.deleteButton}
                                 >
-                                    <FontIcon style={styles.deleteButton} className="material-icons">delete</FontIcon>
+                                    <Icon style={styles.deleteButton} className="material-icons">delete</Icon>
                                 </IconButton>
-                            </TableRowColumn>
+                            </TableCell>
                         </TableRow>
                     );
                 }
@@ -146,30 +139,30 @@ const SortableItem = SortableElement(
                 case 'remap': {
                     return (
                         <TableRow selectable style={style} onMouseDown={this.handleMouseDown}>
-                            <TableRowColumn style={styles.planRowColumnSkill}>
+                            <TableCell style={styles.planRowColumnSkill}>
                                 {this.props.value.title}
-                            </TableRowColumn>
-                            <TableRowColumn style={this.props.columnTime} />
-                            <TableRowColumn style={this.props.columnMarketGroup} />
-                            <TableRowColumn style={this.props.columnAttributes} />
-                            <TableRowColumn style={this.props.columnSPhs} />
-                            <TableRowColumn style={this.props.columnLastRemap} />
-                            <TableRowColumn style={styles.planRowColumnEdit}>
+                            </TableCell>
+                            <TableCell style={this.props.columnTime} />
+                            <TableCell style={this.props.columnMarketGroup} />
+                            <TableCell style={this.props.columnAttributes} />
+                            <TableCell style={this.props.columnSPhs} />
+                            <TableCell style={this.props.columnLastRemap} />
+                            <TableCell style={styles.planRowColumnEdit}>
                                 <IconButton
                                     style={styles.deleteButton}
                                     iconStyle={styles.deleteButton}
                                 >
-                                    <FontIcon style={styles.deleteButton} className="material-icons">mode_edit</FontIcon>
+                                    <Icon style={styles.deleteButton} className="material-icons">mode_edit</Icon>
                                 </IconButton>
-                            </TableRowColumn>
-                            <TableRowColumn style={styles.planRowColumnDelete}>
+                            </TableCell>
+                            <TableCell style={styles.planRowColumnDelete}>
                                 <IconButton
                                     style={styles.deleteButton}
                                     iconStyle={styles.deleteButton}
                                 >
-                                    <FontIcon style={styles.deleteButton} className="material-icons">delete</FontIcon>
+                                    <Icon style={styles.deleteButton} className="material-icons">delete</Icon>
                                 </IconButton>
-                            </TableRowColumn>
+                            </TableCell>
                         </TableRow>
                     );
                 }
@@ -368,16 +361,16 @@ export default class SkillPlanTable extends React.Component {
                     </div>
                 </Popover>
                 <Table style={{overflow: 'hidden'}}>
-                    <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                    <TableHead displaySelectAll={false} adjustForCheckbox={false}>
                         <TableRow style={styles.planRow}>
-                            <TableHeaderColumn style={styles.planRowColumnSkill}>Skill</TableHeaderColumn>
-                            <TableHeaderColumn style={this.state.columnTimeStyle}>Training Time</TableHeaderColumn>
-                            <TableHeaderColumn style={this.state.columnMarketGroupStyle}>Group</TableHeaderColumn>
-                            <TableHeaderColumn style={this.state.columnAttributesStyle}>Attributes</TableHeaderColumn>
-                            <TableHeaderColumn style={this.state.columnSPhsStyle}>SP/h</TableHeaderColumn>
-                            <TableHeaderColumn style={this.state.columnLastRemapStyle}>Since remap</TableHeaderColumn>
-                            <TableHeaderColumn style={styles.planRowColumnEdit}></TableHeaderColumn>
-                            <TableHeaderColumn style={styles.planRowColumnDelete}>
+                            <TableCell style={styles.planRowColumnSkill}>Skill</TableCell>
+                            <TableCell style={this.state.columnTimeStyle}>Training Time</TableCell>
+                            <TableCell style={this.state.columnMarketGroupStyle}>Group</TableCell>
+                            <TableCell style={this.state.columnAttributesStyle}>Attributes</TableCell>
+                            <TableCell style={this.state.columnSPhsStyle}>SP/h</TableCell>
+                            <TableCell style={this.state.columnLastRemapStyle}>Since remap</TableCell>
+                            <TableCell style={styles.planRowColumnEdit}></TableCell>
+                            <TableCell style={styles.planRowColumnDelete}>
                                 <IconButton
                                     style={styles.deleteButton}
                                     iconStyle={styles.deleteButton}
@@ -386,11 +379,11 @@ export default class SkillPlanTable extends React.Component {
                                         columnEditAnchor: e.currentTarget,
                                     })}
                                 >
-                                    <FontIcon style={styles.deleteButton} className="material-icons">keyboard_arrow_down</FontIcon>
+                                    <Icon style={styles.deleteButton} className="material-icons">keyboard_arrow_down</Icon>
                                 </IconButton>
-                            </TableHeaderColumn>
+                            </TableCell>
                         </TableRow>
-                    </TableHeader>
+                    </TableHead>
                     <SortableList
                         items={this.state.items}
                         distance={1}
@@ -408,7 +401,7 @@ export default class SkillPlanTable extends React.Component {
                     />
                     <TableFooter style={styles.planRow} adjustForCheckbox={false}>
                         <TableRow style={styles.planRow}>
-                            <TableHeaderColumn style={styles.planRowColumnSkill}>
+                            <TableCell style={styles.planRowColumnSkill}>
                                 {
                                     this.state.selection && this.state.selection.length > 1 ?
                                     `${this.state.items.length} skills (${this.state.selection.length} selected - ${
@@ -420,14 +413,14 @@ export default class SkillPlanTable extends React.Component {
                                     })`
                                     :
                                     `${this.state.items.length} skills`
-                                }</TableHeaderColumn>
-                            <TableHeaderColumn style={this.state.columnTimeStyle}>{DateHelper.niceCountdown(this.state.totalTime)}</TableHeaderColumn>
-                            <TableHeaderColumn style={this.state.columnMarketGroupStyle} />
-                            <TableHeaderColumn style={this.state.columnAttributesStyle} />
-                            <TableHeaderColumn style={this.state.columnSPhsStyle} />
-                            <TableHeaderColumn style={this.state.columnLastRemapStyle} />
-                            <TableHeaderColumn style={styles.planRowColumnEdit} />
-                            <TableHeaderColumn style={styles.planRowColumnDelete} />
+                                }</TableCell>
+                            <TableCell style={this.state.columnTimeStyle}>{DateHelper.niceCountdown(this.state.totalTime)}</TableCell>
+                            <TableCell style={this.state.columnMarketGroupStyle} />
+                            <TableCell style={this.state.columnAttributesStyle} />
+                            <TableCell style={this.state.columnSPhsStyle} />
+                            <TableCell style={this.state.columnLastRemapStyle} />
+                            <TableCell style={styles.planRowColumnEdit} />
+                            <TableCell style={styles.planRowColumnDelete} />
                         </TableRow>
                     </TableFooter>
                 </Table>

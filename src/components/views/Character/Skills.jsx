@@ -1,10 +1,15 @@
 'use strict';
+//material-ui
+import { Card, CardHeader, CardContent } from '@material-ui/core';
 
+//local
+import CharacterModel from '../../../models/Character';
+
+//react
 import React from 'react';
 
-import {Card, CardHeader, CardText} from 'material-ui/Card';
+//---------------------------------end imports---------------------------------
 
-import CharacterModel from '../../../models/Character';
 
 const styles = {
     card: {
@@ -29,7 +34,7 @@ export default class Skills extends React.Component {
             return (
                 <Card style={styles.card}>
                     <CardHeader title="Skills"/>
-                    <CardText>Sorry, could not find this character's skill sheet, please try again after the next skills refresh occurs (~15 minutes max).</CardText>
+                    <CardContent>Sorry, could not find this character's skill sheet, please try again after the next skills refresh occurs (~15 minutes max).</CardContent>
                 </Card>
             );
         }
@@ -46,7 +51,7 @@ export default class Skills extends React.Component {
                                 showExpandableButton={true}
                             />
 
-                            <CardText expandable={true}>
+                            <CardContent expandable={true}>
                                 <table>
                                     <tbody>
                                         {
@@ -83,7 +88,7 @@ export default class Skills extends React.Component {
                                         }
                                     </tbody>
                                 </table>
-                            </CardText>
+                            </CardContent>
                         </Card>
                     )
                 }

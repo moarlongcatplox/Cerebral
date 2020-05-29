@@ -1,6 +1,13 @@
 'use strict';
+//material-ui
 
+//local
+
+//react
 import Store from 'electron-store';
+
+//---------------------------------end imports---------------------------------
+
 
 let farmCharacters;
 const farmCharactersStore = new Store({
@@ -10,11 +17,12 @@ let subscribedComponents = [];
 
 class FarmCharacter {
 
-    constructor(id, baseSp) {
+    constructor(id, accountName, baseSp) {
         if (id !== undefined) {
             id = id.toString();
         }
         this.id = id;
+        this.accountName = accountName;
         this.baseSp = baseSp;
     }
 

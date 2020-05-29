@@ -1,5 +1,14 @@
+'use strict';
+//material-ui
+import { Popover, TextField } from '@material-ui/core';
+
+//local
+
+//react
 import React from 'react';
-import { Popover, TextField } from 'material-ui';
+
+//---------------------------------end imports---------------------------------
+
 
 const styles = {
     popover: {

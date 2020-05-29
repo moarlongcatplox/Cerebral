@@ -1,10 +1,8 @@
 'use strict';
+//material-ui
+import { Button, Icon } from '@material-ui/core';
 
-import React from 'react';
-
-import RaisedButton from 'material-ui/RaisedButton';
-import {FontIcon} from 'material-ui';
-
+//local
 import Summary from './Character/Summary';
 import Skills from './Character/Skills';
 import Plans from './Character/Plans';
@@ -12,11 +10,19 @@ import Contracts from './Character/Contracts';
 import Mails from './Character/Mails';
 import Api from './Character/Api';
 
+//react
+import React from 'react';
+
+//---------------------------------end imports---------------------------------
+
+
 const styles = {
     button: {
-        marginLeft: 10,
-        marginTop: 10,
-        fontWeight: 'bold',
+        marginLeft: 5,
+        width: 130,
+        marginTop: 5,
+        backgroundColor: 'rgba(75, 75, 75, .5)',
+        color: 'rgb(245, 245, 245)'
     },
     buttonDiv: {
         marginLeft: 10,
@@ -66,47 +72,47 @@ export default class Character extends React.Component {
         return (
             <div style={{width: '100%', overflow: 'hidden'}}>
                 <div style={styles.buttonDiv}>
-                    <RaisedButton label="Summary"
+                    <Button variant="contained" label="Summary"
                                   disabled={this.state.currentPage === 'summary'}
-                                  backgroundColor="#616161"
                                   style={styles.button}
-                                  icon={<FontIcon className="material-icons">assessment</FontIcon>}
-                                  onClick={e => this.switchPage('summary')}/>
+                                  startIcon={<Icon>assessment</Icon>}
+                                  onClick={e => this.switchPage('summary')}>
+                    Summary</Button>
 
-                    <RaisedButton label="Skills"
+                    <Button variant="contained" label="Skills"
                                   disabled={this.state.currentPage === 'skills'}
-                                  backgroundColor="#616161"
                                   style={styles.button}
-                                  icon={<FontIcon className="material-icons">library_books</FontIcon>}
-                                  onClick={e => this.switchPage('skills')}/>
+                                  startIcon={<Icon>library_books</Icon>}
+                                  onClick={e => this.switchPage('skills')}>
+                    Skills</Button>
 
-                    <RaisedButton label="Plans"
+                    <Button variant="contained" label="Plans"
                                   disabled={this.state.currentPage === 'plans'}
-                                  backgroundColor="#616161"
                                   style={styles.button}
-                                  icon={<FontIcon className="material-icons">format_list_numbered</FontIcon>}
-                                  onClick={e => this.switchPage('plans')}/>
+                                  startIcon={<Icon>format_list_numbered</Icon>}
+                                  onClick={e => this.switchPage('plans')}>
+                    plans</Button>
 
-                    <RaisedButton label="Mails"
+                    <Button variant="contained" label="Mails"
                                   disabled={this.state.currentPage === 'mails'}
-                                  backgroundColor="#616161"
                                   style={styles.button}
-                                  icon={<FontIcon className="material-icons">mail</FontIcon>}
-                                  onClick={e => this.switchPage('mails')} />
+                                  startIcon={<Icon>mail</Icon>}
+                                  onClick={e => this.switchPage('mails')} >
+                    mails</Button>
 
-                    <RaisedButton label="Contracts"
+                    <Button variant="contained" label="Contracts"
                                   disabled={this.state.currentPage === 'contracts'}
-                                  backgroundColor="#616161"
                                   style={styles.button}
-                                  icon={<FontIcon className="material-icons">assignment</FontIcon>}
-                                  onClick={e => this.switchPage('contracts')} />
+                                  startIcon={<Icon>assignment</Icon>}
+                                  onClick={e => this.switchPage('contracts')} >
+                    contracts</Button>
 
-                    <RaisedButton label="API"
+                    <Button variant="contained" label="API"
                                   disabled={this.state.currentPage === 'api'}
-                                  backgroundColor="#616161"
                                   style={styles.button}
-                                  icon={<FontIcon className="material-icons">file_download</FontIcon>}
-                                  onClick={e => this.switchPage('api')} />
+                                  startIcon={<Icon>file_download</Icon>}
+                                  onClick={e => this.switchPage('api')} >
+                    API</Button>
                 </div>
 
                 {component}

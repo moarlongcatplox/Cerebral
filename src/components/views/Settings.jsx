@@ -1,14 +1,17 @@
 'use strict';
+//material-ui
+import { Card, CardHeader, CardContent, TextField, Icon, Button} from '@material-ui/core';
+import { deepOrange } from '@material-ui/core/colors';
+const deepOrange400=deepOrange[400];
 
+//local
+import SettingsHelper from './../../helpers/SettingsHelper'
+
+//react
 import React from 'react';
 
-import {Card, CardHeader, CardText} from 'material-ui/Card';
-import {deepOrange400} from 'material-ui/styles/colors';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import {FontIcon} from 'material-ui';
+//---------------------------------end imports---------------------------------
 
-import SettingsHelper from './../../helpers/SettingsHelper'
 
 const styles = {
     card: {
@@ -59,7 +62,7 @@ export default class Settings extends React.Component {
                         subtitle="You must input a client ID and secret key from the EVE Developers website in order to authorize your EVE characters."
                     />
 
-                    <CardText>
+                    <CardContent>
                         <p>
                             Please visit this page and follow the instructions to create a Client ID/Secret Key:<br/>
                             <a href="https://github.com/PrometheusSatyen/Cerebral/blob/master/docs/API-SETUP.md" target="_blank" style={{color: '#fff'}}>API Setup Instructions</a><br/>
@@ -90,14 +93,14 @@ export default class Settings extends React.Component {
 
                         <br/>
 
-                        <RaisedButton
+                        <Button variant="contained"
                             label="Save"
                             backgroundColor="#616161"
                             style={styles.button}
-                            icon={<FontIcon className="material-icons">save</FontIcon>}
+                            icon={<Icon className="material-icons">save</Icon>}
                             onClick={this.saveDeveloperCredentials}
                         />
-                    </CardText>
+                    </CardContent>
                 </Card>
             </div>
         );

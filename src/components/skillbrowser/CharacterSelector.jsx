@@ -1,8 +1,15 @@
+'use strict';
+//material-ui
+import { MenuItem, Select } from '@material-ui/core';
+
+//local
+import Character from '../../models/Character';
+
+//react
 import React from 'react';
 
-import { MenuItem, SelectField } from 'material-ui';
+//---------------------------------end imports---------------------------------
 
-import Character from '../../models/Character';
 
 export default class CharacterSelector extends React.Component {
     constructor(props) {
@@ -29,13 +36,13 @@ export default class CharacterSelector extends React.Component {
 
     render() {
         return (
-            <SelectField style={{ margin: 10 }}
+            <Select style={{ margin: 10 }}
                 floatingLabelText="Character"
                 value={this.state.characterId}
                 onChange={this.handleCharacterChange}
             >
                 {this.chars}
-            </SelectField>
+            </Select>
         );
     }
 }

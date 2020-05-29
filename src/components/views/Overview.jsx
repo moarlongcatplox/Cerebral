@@ -1,15 +1,24 @@
 'use strict';
+//material-ui
 
-import React from 'react';
-
-import AddCharacterButton from '../buttons/AddCharacterButton';
+//local
 import CharactersOverviewTable from '../tables/CharactersOverviewTable';
 
+//react
+import React from 'react';
+
+//---------------------------------end imports---------------------------------
+
+
 export default class Overview extends React.Component {
-    render() {
+
+    componentWillMount(){
+        //clears redirect path
+        this.setState({redirectPath: undefined});    
+    }
+        render() {
         return (
             <div>
-                <AddCharacterButton/>
                 <CharactersOverviewTable/>
             </div>
         );

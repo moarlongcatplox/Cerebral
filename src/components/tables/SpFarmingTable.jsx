@@ -1,28 +1,44 @@
 'use strict';
+//material-ui
+import { Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
 
-import React from 'react';
-import {Redirect} from 'react-router';
-
+//local
 import Character from '../../models/Character';
 import FarmCharacter from '../../models/FarmCharacter';
 import FarmHelper from '../../helpers/FarmHelper';
 import DateTimeHelper from '../../helpers/DateTimeHelper';
 
-import Avatar from 'material-ui/Avatar';
-import {Table, TableHeader, TableHeaderColumn, TableBody, TableRow, TableRowColumn} from 'material-ui/Table';
-import IconButton from 'material-ui/IconButton';
-import FontIcon from 'material-ui/FontIcon';
-import {red500} from 'material-ui/styles/colors';
+//react
+import React from 'react';
+import {Redirect} from 'react-router';
+
+//---------------------------------end imports---------------------------------
 
 const styles = {
     charactersTable: {
         height: '100%',
-        width: '100%'
+        width: '95%'
     },
-    omegaStatusIcon: {
-        marginTop: '5px'
-    }
+    farmRow: {
+        height: 23,
+    },
+    
+    farmRowColumnDelete: {
+        height: 23,
+        width: 20,
+        paddingRight: 0,
+        paddingLeft: 5,
+    },
+    
+    farmRowColumn: {
+        height: 23,
+        paddingRight: 6,
+        paddingLeft: 6,
+    },
+
 };
+
+
 
 export default class SpFarmingTable extends React.Component {
     constructor(props) {
@@ -33,7 +49,7 @@ export default class SpFarmingTable extends React.Component {
             redirectPath: undefined
         };
     }
-
+    
     componentDidMount() {
         this.timerId = setInterval(
             () => this.tick(),
@@ -78,85 +94,71 @@ export default class SpFarmingTable extends React.Component {
 
         return (
             <Table style={styles.charactersTable}>
-                <TableHeader displaySelectAll={false} adjustForCheckbox={false} enableSelectAll={false}>
+                <TableHead>
                     <TableRow>
-                        <TableHeaderColumn style={{width: '20px'}}/>
-                        <TableHeaderColumn style={{width: '20px'}}/>
-                        <TableHeaderColumn style={{width: '20px'}}/>
-                        <TableHeaderColumn>Character</TableHeaderColumn>
-                        <TableHeaderColumn>
-                            Base SP<br/>
-                            Total SP
-                        </TableHeaderColumn>
-                        <TableHeaderColumn>
-                            Injectors Ready<br/>
-                            Time Until Next Injector
-                        </TableHeaderColumn>
-                        <TableHeaderColumn>
-                            Current SP/hour<br/>
-                            Queue Length
-                        </TableHeaderColumn>
-                        <TableHeaderColumn style={{width: 20}}/>
+                        <TableCell style={styles.farmRowColumnDelete}>&nbsp;</TableCell>
+                        <TableCell style={styles.farmRowColumn}><strong>Character</strong><br/><small>Account Name</small></TableCell>
+                        <TableCell style={styles.farmRowColumn}><strong>Next Injector</strong></TableCell>
+                        <TableCell style={styles.farmRowColumn}><strong>SP/hour</strong></TableCell>
+                        <TableCell style={styles.farmRowColumn}><strong>Available</strong><br/><small>Total: XXX</small></TableCell>
                     </TableRow>
-                </TableHeader>
+                </TableHead>
 
                 <TableBody displayRowCheckbox={false}>
                     {this.state.characters.map(farmChar => {
-                        const char = Character.get(farmChar.id);
-                        let omegaStatusIconPath = './../resources/';
-                        switch(char.isOmega()) {
-                            case true:
-                                omegaStatusIconPath += 'omega.png';
-                                break;
-                            case false:
-                                omegaStatusIconPath += 'alpha.png';
-                                break;
-                            default:
-                                omegaStatusIconPath = '';
-                        }
-                        const currentSkill = char.getCurrentSkill();
-
-                        return (
-                            <TableRow key={char.id} selectable={false}>
-                                <TableRowColumn style={{width: '20px'}}>
-                                    <Avatar src={char.portraits.px128x128} style={{marginTop: 5}}/>
-                                </TableRowColumn>
-
-                                <TableRowColumn style={{width: '20px'}}>
-                                    <img src={omegaStatusIconPath} style={{marginTop: 5}}/>
-                                </TableRowColumn>
-
-                                <TableRowColumn style={{width: '20px'}}>
-                                    <img src={`https://image.eveonline.com/Corporation/${char.corporation_id}_64.png`} width={35} style={{marginTop: 7}}/>
-                                </TableRowColumn>
-
-                                <TableRowColumn><a onClick={e => this.handleClick(e, char.id)}>{char.name}</a></TableRowColumn>
-
-                                <TableRowColumn>
-                                    {farmChar.baseSp.toLocaleString(navigator.language, { maximumFractionDigits: 0 })} SP<br/>
-                                    {char.getTotalSp().toLocaleString(navigator.language, { maximumFractionDigits: 0 })} SP
-                                </TableRowColumn>
-
-                                <TableRowColumn>
-                                    {char.getInjectorsReady(farmChar.baseSp)}<br/>
-                                    {DateTimeHelper.timeUntil(char.getNextInjectorDate(farmChar.baseSp))}
-                                </TableRowColumn>
-
-                                <TableRowColumn>
-                                    {currentSkill !== undefined ? char.getCurrentSpPerHour() : "Not Training"}<br/>
-                                    {currentSkill !== undefined ? DateTimeHelper.timeUntil(new Date(char.getLastSkill().finish_date)) : ""}
-                                </TableRowColumn>
-
-                                <TableRowColumn style={{width: 20, textAlign: 'right', paddingRight: 40}}>
-                                    <IconButton color={red500} onClick={e => this.handleDelete(e, char.id)}>
-                                        <FontIcon className="material-icons">delete</FontIcon>
-                                    </IconButton>
-                                </TableRowColumn>
-                            </TableRow>
-                        )
+                    const char = Character.get(farmChar.id);
+                    const currentSkill = char.getCurrentSkill();
+            return (
+                    <TableRow style={styles.farmRow} key={char.id} selectable={false}>
+                        <TableCell style={styles.farmRowColumnDelete}><a onClick={e => this.handleDelete(e, char.id)}>❌</a></TableCell>
+                        <TableCell style={styles.farmRowColumn}><a onClick={e => this.handleClick(e, char.id)}>{char.name}</a><br/><small>{farmChar.accountName}</small></TableCell>
+                        <TableCell style={styles.farmRowColumn}>{DateTimeHelper.timeUntil(char.getNextInjectorDate(farmChar.baseSp))}</TableCell>
+                        <TableCell style={styles.farmRowColumn}>{currentSkill !== undefined ? char.getCurrentSpPerHour() : "Not Training"}</TableCell>
+                        <TableCell style={styles.farmRowColumn}>{char.getInjectorsReady(farmChar.baseSp)}<br/></TableCell>
+                    </TableRow>
+                    )
                     })}
                 </TableBody>
             </Table>
         );
     }
 }
+
+
+/*
+
+export default () => {
+    const [columns] = useState([
+      { name: 'account', title: 'Account' },
+      { name: 'character', title: 'Character' },
+      { name: 'nextInjector', title: 'Next Injector' },
+      { name: 'hourlySP', title: 'SP/Hour' },
+      { name: 'availableInjectors', title: 'Injectors Available' },
+    ]);
+    const [rows] = useState(generateRows({ columnValues: globalSalesValues, length: 8 }));
+    const [tableColumnExtensions] = useState([
+      { columnName: 'amount', align: 'right' },
+    ]);
+    const [totalSummaryItems] = useState([
+      { columnName: 'region', type: 'count' },
+      { columnName: 'amount', type: 'sum' },
+    ]);
+    const [currencyColumns] = useState(['amount']);
+    const [grouping] = useState([{ columnName: 'region' }]);
+    const [groupSummaryItems] = useState([
+      { columnName: 'region', type: 'count' },
+      { columnName: 'amount', type: 'sum' },
+      {
+        columnName: 'amount', type: 'sum', showInGroupFooter: false,
+      },
+      {
+        columnName: 'amount', type: 'max', showInGroupFooter: false, alignByColumn: true,
+      },
+      {
+        columnName: 'units', type: 'sum', showInGroupFooter: false, alignByColumn: true,
+      },
+    ]);
+}
+
+
+*/

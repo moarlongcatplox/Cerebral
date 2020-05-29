@@ -1,6 +1,13 @@
 'use strict';
+//material-ui
 
+//local
 import EsiClient from './eve/EsiClient';
+
+//react
+
+//---------------------------------end imports---------------------------------
+
 
 export default class BulkIdResolver {
 

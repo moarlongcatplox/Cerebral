@@ -1,102 +1,82 @@
 'use strict';
+//material-ui
+import { Drawer, makeStyles, CssBaseline, List, ListItem, ListItemIcon, ListItemText, Icon }from '@material-ui/core';
 
+//local
+import CharacterHelper from '../../helpers/CharacterHelper';
+
+//react
 import React from 'react';
-import {Redirect} from 'react-router';
+import { Link } from 'react-router-dom'
 
-import Character from '../../models/Character';
+//---------------------------------end imports---------------------------------
 
-import Drawer from 'material-ui/Drawer';
-import Avatar from 'material-ui/Avatar';
-import {List, ListItem, makeSelectable} from 'material-ui/List';
 
-let SelectableList = makeSelectable(List);
+//import { strict } from 'assert';
+//import { NONAME } from 'dns';
+const drawerWidth = 220;
 
-export default class LeftNav extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            characters: Object.values(Character.getAll()).sort((a, b) => b.getTotalSp() - a.getTotalSp()),
-            redirectPath: undefined,
-            currentSelect: 1
-        };
-    }
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'grid',
+  },
+  appBar: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+    height: '100%',
+    padding: '10px',
+    color: 'rgba(255,255,255)',
+    backgroundColor: 'rgba(75, 75, 75, 0.05)',
+    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+  },
+  aLink: {
+    textDecoration: 'none',
+  }
+}));
+//    drawer right below titlebar
+//    height: `calc(100% - 28px)`,
 
-    componentDidMount() {
-        this.subscriberId = Character.subscribe(this);
-    }
+export default function PermanentDrawerLeft() {
+  const classes = useStyles();
 
-    componentWillUnmount() {
-        Character.unsubscribe(this.subscriberId);
-    }
-
-    handleClick(e, characterId) {
-        let path;
-        let value;
-        let input = e.target.innerHTML;
-        input = input.replace(/<(?:.|\n)*?>/gm, '');
-
-        switch(input) {
-            case 'Settings':
-                path = '/settings';
-                value = 5;
-                break;
-            case 'Contracts':
-                path = '/contracts';
-                value = 4;
-                break;
-            case 'SP Farming':
-                path = '/sp-farming';
-                value = 3;
-                break;
-            case 'Skill Browser':
-                path = '/skill-browser';
-                value = 2;
-                break;
-            case 'Character Overview':
-                path = '/';
-                value = 1;
-                break;
-            default:
-                path = '/characters/' + characterId;
-                value = characterId;
-        }
-
-        this.setState({
-            redirectPath: path,
-            currentSelect: value
-        });
-    }
-
-    render() {
-        if (this.state.redirectPath !== undefined) {
-            this.setState({redirectPath: undefined});
-
-            return <Redirect push to={this.state.redirectPath}/>;
-        }
-
-        return (
-            <Drawer width={270}>
-                <SelectableList value={this.state.currentSelect}>
-                    <ListItem value={1} primaryText="Character Overview" onClick={(e) => this.handleClick(e)}/>
-                    <ListItem value={2} primaryText="Skill Browser" onClick={(e) => this.handleClick(e)}/>
-                    <ListItem value={3} primaryText="SP Farming" onClick={(e) => this.handleClick(e)}/>
-                    <ListItem value={4} primaryText="Contracts" onClick={(e) => this.handleClick(e)}/>
-
-                    <br/>
-
-                    {this.state.characters.map(character => {
-                        return (
-                            <ListItem
-                                value={character.id}
-                                key={character.id}
-                                primaryText={character.name}
-                                leftAvatar={<Avatar src={character.portraits.px128x128}/>}
-                                onClick={(e) => this.handleClick(e, character.id)}
-                            />
-                        )
-                    })}
-                </SelectableList>
-            </Drawer>
-        );
-    }
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <Drawer
+        className={classes.drawer}
+        variant="permanent"
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+        anchor="top"
+      >
+        <div className={classes.toolbar} />
+        <List>
+            <ListItem button key="Authorize" onClick={CharacterHelper.addCharacter}>
+                <ListItemIcon> <Icon className="material-icons">person_add</Icon></ListItemIcon>
+                <ListItemText primary="Authorize" />
+            </ListItem> 
+            <ListItem button key="Overview" component={Link} to={'/'}>
+              <ListItemIcon> <Icon className="material-icons">assignment</Icon></ListItemIcon>
+              <ListItemText primary="Overview" />
+            </ListItem> 
+            <ListItem button key="Skill Farm" component={Link} to={'/sp-farming'}>
+              <ListItemIcon> <Icon className="material-icons">school</Icon></ListItemIcon>
+              <ListItemText primary="Skill Farm" />
+            </ListItem> 
+            <ListItem button key="Contracts" component={Link} to={'/contracts'}>
+              <ListItemIcon> <Icon className="material-icons">assignment_turned_in</Icon></ListItemIcon>
+              <ListItemText primary="Contracts" />
+            </ListItem> 
+        </List>
+      </Drawer>
+    </div>
+  );
 }

@@ -1,7 +1,14 @@
+'use strict';
+//material-ui
+import { Popover, Menu, MenuItem } from '@material-ui/core';
+
+//local
+
+//react
 import React from 'react';
-import Popover from 'material-ui/Popover';
-import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
+
+//---------------------------------end imports---------------------------------
+
 
 const styles = {
     divItem: {

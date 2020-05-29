@@ -1,11 +1,16 @@
 'use strict';
+//material-ui
+import { Card, CardHeader, CardContent } from '@material-ui/core';
 
-import React from 'react';
-
-import {Card, CardHeader, CardText} from 'material-ui/Card';
-
+//local
 import ContractsTable from '../tables/ContractsTable';
 import Character from '../../models/Character';
+
+//react
+import React from 'react';
+
+//---------------------------------end imports---------------------------------
+
 
 const styles = {
     card: {
@@ -20,20 +25,20 @@ export default class Contracts extends React.Component {
                 <Card style={styles.card}>
                     <CardHeader title="Pending Contracts"/>
 
-                    <CardText>
+                    <CardContent>
                         <ContractsTable contracts={Character.getAllContracts(false)}/>
-                    </CardText>
+                    </CardContent>
                 </Card>
 
                 <Card style={styles.card}>
                     <CardHeader title="Completed Contracts"/>
 
-                    <CardText>
+                    <CardContent>
                         <ContractsTable
                             contracts={Character.getAllContracts(true)}
                             complete={true}
                         />
-                    </CardText>
+                    </CardContent>
                 </Card>
             </div>
         );

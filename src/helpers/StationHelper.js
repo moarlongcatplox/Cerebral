@@ -1,10 +1,16 @@
 'use strict';
+//material-ui
 
-import Store from 'electron-store';
-
+//local
 import EsiClient from './eve/EsiClient';
 import SystemHelper from './SystemHelper';
 import TypeHelper from './TypeHelper';
+
+//react
+import Store from 'electron-store';
+
+//---------------------------------end imports---------------------------------
+
 
 let things = undefined;
 const thingsStore = new Store({

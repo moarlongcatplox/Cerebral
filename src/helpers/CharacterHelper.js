@@ -1,13 +1,17 @@
 'use strict';
+//material-ui
 
-import electron from 'electron';
-
+//local
 import SsoClientv2 from './eve/SsoClientv2';
 import Character from '../models/Character';
-
 import StructureHelper from './StructureHelper';
-
 import appProperties from '../../resources/properties.js';
+
+//react
+import electron from 'electron';
+
+//---------------------------------end imports---------------------------------
+
 
 let authWindow;
 
@@ -18,8 +22,8 @@ export default class CharacterHelper {
         let redirect = client.redirect(appProperties.scopes.map(a => a.name), challenge);
 
         authWindow = new electron.remote.BrowserWindow({
-            width: 475,
-            height: 700,
+            width: 500,
+            height: 800,
             show: false,
             'node-integration': false
         });

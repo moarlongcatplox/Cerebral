@@ -1,6 +1,12 @@
 'use strict';
+//material-ui
 
+//local
+
+//react
 import Store from 'electron-store';
+
+//---------------------------------end imports---------------------------------
 
 
 let skillPlans = undefined;

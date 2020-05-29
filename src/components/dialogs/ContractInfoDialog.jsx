@@ -1,11 +1,18 @@
 'use strict';
+//material-ui
+import {Dialog, Button} from '@material-ui/core';
+import { red, green } from '@material-ui/core/colors';
+const red500 = red[500];
+const greenA200 = green['A200'];
 
+//local
+import DateTimeHelper from '../../helpers/DateTimeHelper';
+
+//react
 import React from 'react';
 
-import {red500, greenA200} from 'material-ui/styles/colors';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import DateTimeHelper from '../../helpers/DateTimeHelper';
+//---------------------------------end imports---------------------------------
+
 
 const styles = {
     dialog: {
@@ -48,7 +55,7 @@ export default class ContractInfoDialog extends React.Component {
         }
 
         const actions = [
-            <FlatButton
+            <Button
                 label="Close"
                 primary={true}
                 onClick={(e) => this.handleClose(e)}

@@ -1,17 +1,16 @@
 'use strict';
+//material-ui
+import { Dialog, Button, Icon, Select, TextField, MenuItem} from '@material-ui/core';
 
+//local
+import Character from '../../models/Character';
+import FarmHelper from '../../helpers/FarmHelper';
+
+//react
 import React from 'react';
 
-import Character from '../../models/Character';
+//---------------------------------end imports---------------------------------
 
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import FarmHelper from '../../helpers/FarmHelper';
-import FontIcon from 'material-ui/FontIcon';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import TextField from 'material-ui/TextField';
 
 const styles = {
     addFarmButton: {
@@ -28,6 +27,7 @@ export default class AddFarmDialog extends React.Component {
         this.state = {
             open: false,
             characterValue: 0,
+            accountName: '',
             baseSpValue: 5000000
         };
     }
@@ -40,6 +40,14 @@ export default class AddFarmDialog extends React.Component {
         this.setState({baseSpValue: v});
     }
 
+    
+    //Attempt at adding account name box information
+    handleAccountChange(e, v){
+        this.setState({accountName: v})
+    }
+
+
+
     handleOpen(e) {
         this.setState({open: true});
     };
@@ -48,19 +56,22 @@ export default class AddFarmDialog extends React.Component {
         this.setState({
             open: false,
             characterValue: 0,
+            //leave accountName the same so it's already populated when/if a new character is added
+            //accountName: '',
             baseSpValue: 5000000
         });
     };
 
+    //TODO add error handling for improper account names (sorta done)
     handleAdd(e) {
-        if ((typeof this.state.characterValue !== 'string') || (this.state.characterValue === '') || (this.state.baseSpValue === '')) {
+        if ((typeof this.state.characterValue !== 'string') || (this.state.characterValue === '') || (this.state.baseSpValue === '' || (this.state.accountName === ''))) {
             alert("Failed to add/update farm, please ensure you filled out the form correctly and try again");
         } else {
             if (typeof this.state.baseSpValue === 'string') {
-                FarmHelper.addFarm(this.state.characterValue, parseInt(this.state.baseSpValue));
+                FarmHelper.addFarm(this.state.characterValue, this.state.accountName, parseInt(this.state.baseSpValue));
                 this.handleClose(e);
             } else if (typeof this.state.baseSpValue === 'number') {
-                FarmHelper.addFarm(this.state.characterValue, this.state.baseSpValue);
+                FarmHelper.addFarm(this.state.characterValue, this.state.accountName, this.state.baseSpValue);
                 this.handleClose(e);
             } else {
                 alert("Failed to add/update farm, please ensure you filled out the form correctly and try again");
@@ -70,12 +81,12 @@ export default class AddFarmDialog extends React.Component {
 
     render() {
         const actions = [
-            <FlatButton
+            <Button
                 label="Cancel"
                 primary={true}
                 onClick={(e) => this.handleClose(e)}
             />,
-            <FlatButton
+            <Button
                 label="Add"
                 primary={true}
                 onClick={(e) => this.handleAdd(e)}
@@ -84,12 +95,11 @@ export default class AddFarmDialog extends React.Component {
 
         return (
             <div>
-                <RaisedButton
+                <Button variant="contained"
                     label="Add/Update Farm"
-                    backgroundColor="#616161"
                     onClick={(e) => this.handleOpen(e)}
                     style={styles.addFarmButton}
-                    icon={<FontIcon className="material-icons">note_add</FontIcon>}
+                    icon={<Icon className="material-icons">note_add</Icon>}
                 />
 
                 <Dialog
@@ -100,8 +110,7 @@ export default class AddFarmDialog extends React.Component {
                     onRequestClose={(e) => this.handleClose(e)}
                     contentStyle={styles.addFarmDialog}
                 >
-
-                    <SelectField
+                    <Select
                         floatingLabelText="Character"
                         value={this.state.characterValue}
                         onChange={(e, i, v) => this.handleCharacterChange(e, i, v)}
@@ -109,7 +118,17 @@ export default class AddFarmDialog extends React.Component {
                         {Object.values(Character.getAll()).sort((a, b) => b.getTotalSp() - a.getTotalSp()).map(character => {
                             return (<MenuItem key={character.id} value={character.id} primaryText={character.name} />)
                         })}
-                    </SelectField>
+                    </Select>
+                    
+                    
+                    <TextField
+                        //Account Name goes here
+                        floatingLabelText="Account Name"
+                        type="text"
+                        value={this.state.accountName}
+                        onChange={(e, v) => this.handleAccountChange(e, v)}
+                                            
+                    />
 
                     <TextField
                         type="number"

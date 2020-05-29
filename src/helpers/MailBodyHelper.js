@@ -1,7 +1,13 @@
 'use strict';
+//material-ui
 
+//local
+
+//react
 import SanitizeHtml from 'sanitize-html';
 import Store from 'electron-store';
+
+//---------------------------------end imports---------------------------------
 
 
 let mailbodies = undefined;
@@ -22,8 +28,8 @@ export default class MailBodyHelper {
             (
                 (mailbodies[id].hasOwnProperty('failed')) && // or the mail body is cached as FAILED
                 (
-                    (!mailbodies[id].characterIdsAttempted.includes(clientCharacterId)) || // and a pull hasn't been attempted with this character
-                    (false) // or a pull hasn't been attempted with this character in > 30 days (TODO!)
+                    (// and a pull hasn't been attempted with this character
+                    (!mailbodies[id].characterIdsAttempted.includes(clientCharacterId) || false)) // or a pull hasn't been attempted with this character in > 30 days (TODO!)
                 )
             )
         ) {

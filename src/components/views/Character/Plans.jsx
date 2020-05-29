@@ -1,15 +1,8 @@
 'use strict';
+//material-ui
+import { Card, MenuItem, Paper, Button, Select} from '@material-ui/core';
 
-import React from 'react';
-
-import {
-    Card,
-    MenuItem,
-    Paper,
-    RaisedButton,
-    SelectField,
-} from 'material-ui';
-
+//local
 import ExportFromPlanPopover from '../../popovers/ExportFromPlanPopover';
 import FilteredSkillList from '../../skillbrowser/FilteredSkillList';
 import ImportToPlanPopover from '../../popovers/ImportToPlanPopover';
@@ -20,6 +13,11 @@ import PlanSkillPopover from '../../popovers/PlanSkillToLevelPopover';
 import RemapDialog from '../../dialogs/RemapDialog';
 import SkillPlanStore from '../../../helpers/SkillPlanStore';
 import SkillPlanTable from '../../tables/SkillPlanTable';
+
+//react
+import React from 'react';
+
+//---------------------------------end imports---------------------------------
 
 
 const styles = {
@@ -464,7 +462,7 @@ export default class Plans extends React.Component {
 
                 >
                     <div style={{ float: 'left', marginLeft: 10 }}>
-                        <SelectField
+                        <Select
                             style={styles.planSelector}
                             floatingLabelText="Plan"
                             value={this.state.skillPlanId}
@@ -481,11 +479,11 @@ export default class Plans extends React.Component {
                                     );
                                 })
                             }
-                        </SelectField>
+                        </Select>
                     </div>
                     <div style={{ float: 'left', marginLeft: 24 }}>
                         <div>
-                            <RaisedButton
+                            <Button variant="contained"
                                 style={styles.raisedButton}
                                 onClick={(e) => this.setState({
                                     newSkillPopoverOpen: true,
@@ -495,7 +493,7 @@ export default class Plans extends React.Component {
                                 backgroundColor="#616161"
                             />
 
-                            <RaisedButton
+                            <Button variant="contained"
                                 style={styles.raisedButton}
                                 onClick={(e) => this.setState({
                                     renameSkillPopoverOpen: true,
@@ -504,7 +502,7 @@ export default class Plans extends React.Component {
                                 label={'Rename'}
                                 backgroundColor="#616161"
                             />
-                            <RaisedButton
+                            <Button variant="contained"
                                 style={styles.raisedButton}
                                 onClick={(e) => this.setState({
                                     importToPlanPopoverOpen: true,
@@ -514,19 +512,19 @@ export default class Plans extends React.Component {
                             />
                         </div>
                         <div>
-                            <RaisedButton
+                            <Button variant="contained"
                                 style={styles.raisedButton}
                                 onClick={this.handleSkillPlanDuplicate}
                                 label={'Duplicate'}
                                 backgroundColor="#616161"
                             />
-                            <RaisedButton
+                            <Button variant="contained"
                                 style={styles.raisedButton}
                                 onClick={this.handleSkillPlanRemove}
                                 label={'Delete'}
                                 backgroundColor="#616161"
                             />
-                            <RaisedButton
+                            <Button variant="contained"
                                 style={styles.raisedButton}
                                 onClick={(e) => this.setState({
                                     exportFromPlanPopoverOpen: true,
@@ -538,13 +536,13 @@ export default class Plans extends React.Component {
                     </div>
                     <div style={{ float: 'right', marginRight: 8, width: 128 }}>
                         <div>
-                            <RaisedButton
+                            <Button variant="contained"
                                 style={styles.raisedButton}
                                 onClick={() => this.setState({ remapDialogOpen: true })}
                                 label={'Add Remap'}
                                 backgroundColor="#616161"
                             />
-                            <RaisedButton
+                            <Button variant="contained"
                                 style={styles.raisedButton}
                                 onClick={() => this.setState({ noteDialogOpen: true })}
                                 label={'Add Note'}

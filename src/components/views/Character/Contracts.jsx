@@ -1,13 +1,17 @@
 'use strict';
+//material-ui
+import { Card, CardHeader, CardContent } from '@material-ui/core';
 
-import React from 'react';
-
-import {Card, CardHeader, CardText} from 'material-ui/Card';
-
+//local
 import CharacterModel from '../../../models/Character';
 import appProperties from '../../../../resources/properties';
-
 import ContractsTable from '../../tables/ContractsTable';
+
+//react
+import React from 'react';
+
+//---------------------------------end imports---------------------------------
+
 
 const styles = {
     card: {
@@ -32,20 +36,20 @@ export default class Contracts extends React.Component {
                         subtitle={`Last Update: ${char.getDataRefreshInfo().find(c => c.type === 'Contracts').lastRefresh}`}
                     />
 
-                    <CardText>
+                    <CardContent>
                         <ContractsTable contracts={contracts.filter(c => !appProperties.contract_completed_statuses.includes(c.status))}/>
-                    </CardText>
+                    </CardContent>
                 </Card>
 
                 <Card style={styles.card}>
                     <CardHeader title="Completed Contracts"/>
 
-                    <CardText>
+                    <CardContent>
                         <ContractsTable
                             contracts={contracts.filter(c => appProperties.contract_completed_statuses.includes(c.status))}
                             complete={true}
                         />
-                    </CardText>
+                    </CardContent>
                 </Card>
             </div>
         );
