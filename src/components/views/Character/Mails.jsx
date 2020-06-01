@@ -1,6 +1,6 @@
 'use strict';
 //material-ui
-import { Card, CardHeader, CardContent } from '@material-ui/core';
+import { Card, CardHeader, CardContent, Typography } from '@material-ui/core';
 
 //local
 import CharacterModel from '../../../models/Character';
@@ -30,6 +30,15 @@ const styles = {
         width: '100%',
         height: '100%',
     },
+    mailCard: {
+        backgroundColor: 'rgba(75, 75, 75, 0.5)',
+        margin: 10,
+    },
+    updateTime: {
+        float: 'right',
+        paddingTop: '5px',
+        fontSize: '9px',
+    }
 };
 
 
@@ -44,15 +53,14 @@ export default class Mails extends React.Component {
 
         return (
             <div>
-                <Card style={styles.card}>
-                    <CardHeader
-                        title={`Last Update: ${char.getDataRefreshInfo().find(c => c.type === 'Mails').lastRefresh}`}
-                    />
+                <Card style={styles.mailCard}>
                     <CardContent>
+                    
                         <MailTable
                             mails={mails}
                             complete={true}
                         />
+                    <span style={styles.updateTime}>{`Last Update: ${char.getDataRefreshInfo().find(c => c.type === 'Mails').lastRefresh}`}</span>
                     </CardContent>
                 </Card>
             </div>
