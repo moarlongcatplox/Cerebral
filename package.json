@@ -1,7 +1,7 @@
 {
   "name": "eve-cerebral-fork",
   "productName": "Cerebral Fork",
-  "version": "0.0.1",
+  "version": "0.8.1",
   "description": "Character Manager for EVE Online",
   "author": "Needmore Longcat forked from Prometheus Satyen",
   "license": "AGPL-3.0-only",
@@ -70,7 +70,6 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-sortable-hoc": "^1.11.0",
-    "react-table": "^7.1.0",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.8",
     "sanitize-html": "^1.24.0",
