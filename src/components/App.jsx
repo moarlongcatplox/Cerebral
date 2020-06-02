@@ -35,6 +35,7 @@ const muiTheme = createMuiTheme(
   {
     palette: {
         type: 'dark',
+        primary: { main: '#fff' }
         //accent1Color: blue700,
         
     },
