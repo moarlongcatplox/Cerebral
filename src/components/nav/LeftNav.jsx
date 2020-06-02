@@ -1,13 +1,14 @@
 'use strict';
 //material-ui
-import { Drawer, makeStyles, CssBaseline, List, ListItem, ListItemIcon, ListItemText, Icon }from '@material-ui/core';
+import { Divider, Drawer, makeStyles, CssBaseline, List, ListItem, ListItemIcon, ListItemText, Icon }from '@material-ui/core';
 
 //local
 import CharacterHelper from '../../helpers/CharacterHelper';
 
 //react
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom';
+
 
 //---------------------------------end imports---------------------------------
 
@@ -16,6 +17,8 @@ import { Link } from 'react-router-dom'
 //import { NONAME } from 'dns';
 const drawerWidth = 220;
 
+//    drawer right below titlebar
+//    height: `calc(100% - 28px)`,
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'grid',
@@ -40,12 +43,9 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
   }
 }));
-//    drawer right below titlebar
-//    height: `calc(100% - 28px)`,
 
 export default function PermanentDrawerLeft() {
   const classes = useStyles();
-
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -58,24 +58,26 @@ export default function PermanentDrawerLeft() {
         anchor="top"
       >
         <div className={classes.toolbar} />
+        
         <List>
             <ListItem button key="Authorize" onClick={CharacterHelper.addCharacter}>
-                <ListItemIcon> <Icon className="material-icons">person_add</Icon></ListItemIcon>
+                <ListItemIcon> <Icon>person_add</Icon></ListItemIcon>
                 <ListItemText primary="Authorize" />
             </ListItem> 
             <ListItem button key="Overview" component={Link} to={'/'}>
-              <ListItemIcon> <Icon className="material-icons">assignment</Icon></ListItemIcon>
+              <ListItemIcon> <Icon>assignment</Icon></ListItemIcon>
               <ListItemText primary="Overview" />
             </ListItem> 
             <ListItem button key="Skill Farm" component={Link} to={'/sp-farming'}>
-              <ListItemIcon> <Icon className="material-icons">school</Icon></ListItemIcon>
+              <ListItemIcon> <Icon>school</Icon></ListItemIcon>
               <ListItemText primary="Skill Farm" />
             </ListItem> 
             <ListItem button key="Contracts" component={Link} to={'/contracts'}>
-              <ListItemIcon> <Icon className="material-icons">assignment_turned_in</Icon></ListItemIcon>
+              <ListItemIcon> <Icon>assignment_turned_in</Icon></ListItemIcon>
               <ListItemText primary="Contracts" />
             </ListItem> 
         </List>
+            <Divider/>
       </Drawer>
     </div>
   );
