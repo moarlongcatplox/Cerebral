@@ -1,6 +1,6 @@
 'use strict';
 //material-ui
-import { Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
+import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer } from '@material-ui/core';
 
 //local
 import Character from '../../models/Character';
@@ -14,10 +14,12 @@ import {Redirect} from 'react-router';
 
 //---------------------------------end imports---------------------------------
 
+
 const styles = {
     charactersTable: {
-        height: '100%',
-        width: '95%'
+        height: 'calc(100vh - 300px)',
+        width: '95%',
+        backgroundColor: 'rgba(75, 75, 75, 0.5)',
     },
     farmRow: {
         height: 23,
@@ -35,10 +37,12 @@ const styles = {
         paddingRight: 6,
         paddingLeft: 6,
     },
+    farmTableContainer: {
+        maxHeight:'calc(100vh - 80px)',
+        backgroundColor: 'rgba(0, 0, 0, 0)',
+    }
 
 };
-
-
 
 export default class SpFarmingTable extends React.Component {
     constructor(props) {
@@ -93,14 +97,16 @@ export default class SpFarmingTable extends React.Component {
         }
 
         return (
-            <Table style={styles.charactersTable}>
-                <TableHead>
+            <TableContainer style={styles.farmTableContainer}>
+                <Table style={styles.charactersTable} size="small" stickyHeader>
+                <TableHead style={{padding: '0 0 0 0'}}>
                     <TableRow>
                         <TableCell style={styles.farmRowColumnDelete}>&nbsp;</TableCell>
-                        <TableCell style={styles.farmRowColumn}><strong>Character</strong><br/><small>Account Name</small></TableCell>
+                        <TableCell style={styles.farmRowColumn}><strong>Character</strong></TableCell>
+                        <TableCell style={styles.farmRowColumn}><small>Account Name</small></TableCell>
                         <TableCell style={styles.farmRowColumn}><strong>Next Injector</strong></TableCell>
                         <TableCell style={styles.farmRowColumn}><strong>SP/hour</strong></TableCell>
-                        <TableCell style={styles.farmRowColumn}><strong>Available</strong><br/><small>Total: XXX</small></TableCell>
+                        <TableCell style={styles.farmRowColumn}><strong>Available</strong><small> (XXX)</small></TableCell>
                     </TableRow>
                 </TableHead>
 
@@ -109,9 +115,10 @@ export default class SpFarmingTable extends React.Component {
                     const char = Character.get(farmChar.id);
                     const currentSkill = char.getCurrentSkill();
             return (
-                    <TableRow style={styles.farmRow} key={char.id} selectable={false}>
+                    <TableRow style={styles.farmRow} key={char.id} hover role="checkbox">
                         <TableCell style={styles.farmRowColumnDelete}><a onClick={e => this.handleDelete(e, char.id)}>❌</a></TableCell>
-                        <TableCell style={styles.farmRowColumn}><a onClick={e => this.handleClick(e, char.id)}>{char.name}</a><br/><small>{farmChar.accountName}</small></TableCell>
+                        <TableCell style={styles.farmRowColumn}><a onClick={e => this.handleClick(e, char.id)}>{char.name}</a></TableCell>
+                        <TableCell style={styles.farmRowColumn}><small>{farmChar.accountName}</small></TableCell>
                         <TableCell style={styles.farmRowColumn}>{DateTimeHelper.timeUntil(char.getNextInjectorDate(farmChar.baseSp))}</TableCell>
                         <TableCell style={styles.farmRowColumn}>{currentSkill !== undefined ? char.getCurrentSpPerHour() : "Not Training"}</TableCell>
                         <TableCell style={styles.farmRowColumn}>{char.getInjectorsReady(farmChar.baseSp)}<br/></TableCell>
@@ -119,7 +126,8 @@ export default class SpFarmingTable extends React.Component {
                     )
                     })}
                 </TableBody>
-            </Table>
+                </Table>
+            </TableContainer>
         );
     }
 }

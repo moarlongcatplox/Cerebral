@@ -1,6 +1,6 @@
 'use strict';
 //material-ui
-import { Dialog, Button, Icon, Select, TextField, MenuItem} from '@material-ui/core';
+import { IconButton, Dialog, Button, Icon, Select, TextField, MenuItem, FormControl, InputLabel, DialogActions, DialogTitle, DialogContent} from '@material-ui/core';
 
 //local
 import Character from '../../models/Character';
@@ -14,10 +14,23 @@ import React from 'react';
 
 const styles = {
     addFarmButton: {
-        margin: '20px 0 20px 20px'
+        margin: '20px 0 20px 20px',
+        position: 'absolute',
+        left: -10,
+        top: 200,
+        zIndex: 1200,
+    },
+    closeIcon: {
+        cursor:'pointer',
+        position: 'absolute',
+        right: 1,
+        top: 1,
     },
     addFarmDialog: {
         width: 350
+    },
+    addFarmForm: {
+        margin: '15px'
     }
 };
 
@@ -27,26 +40,23 @@ export default class AddFarmDialog extends React.Component {
         this.state = {
             open: false,
             characterValue: 0,
-            accountName: '',
+            accountName: ' ',
             baseSpValue: 5000000
         };
     }
 
-    handleCharacterChange(e, i, v) {
-        this.setState({characterValue: v});
+    handleCharacterChange(e) {
+        this.setState({characterValue: e.target.value});
     }
 
-    handleBaseSpChange(e, v) {
-        this.setState({baseSpValue: v});
+    handleBaseSpChange(e) {
+        this.setState({baseSpValue: e.target.value});
     }
 
-    
     //Attempt at adding account name box information
-    handleAccountChange(e, v){
-        this.setState({accountName: v})
+    handleAccountChange(e){
+        this.setState({accountName: e.target.value})
     }
-
-
 
     handleOpen(e) {
         this.setState({open: true});
@@ -80,64 +90,64 @@ export default class AddFarmDialog extends React.Component {
     };
 
     render() {
-        const actions = [
-            <Button
-                label="Cancel"
-                primary={true}
-                onClick={(e) => this.handleClose(e)}
-            />,
-            <Button
-                label="Add"
-                primary={true}
-                onClick={(e) => this.handleAdd(e)}
-            />,
-        ];
+    return (
+        <div>
+            <Button variant="contained" style={styles.addFarmButton}
+                label="Add/Update Farm"
+                onClick={(e) => this.handleOpen(e)}
+                style={styles.addFarmButton}
+            >
+            <Icon>note_add</Icon> Add/Update Farm
+            </Button>
 
-        return (
-            <div>
-                <Button variant="contained"
-                    label="Add/Update Farm"
-                    onClick={(e) => this.handleOpen(e)}
-                    style={styles.addFarmButton}
-                    icon={<Icon className="material-icons">note_add</Icon>}
-                />
+            <Dialog
+                title="Add Character as SP Farm"
+                open={this.state.open}
+                onClose={(e) => this.handleClose(e)}
+                fullWidth = {true}
+       
+            >
+            <DialogTitle>
+                <div>Add Farm <IconButton style={styles.closeIcon} onClick={() => this.setState({ open: false })}><Icon>close</Icon></IconButton></div>
+            </DialogTitle>
 
-                <Dialog
-                    title="Add Character as SP Farm"
-                    actions={actions}
-                    modal={false}
-                    open={this.state.open}
-                    onRequestClose={(e) => this.handleClose(e)}
-                    contentStyle={styles.addFarmDialog}
+            <FormControl variant="outlined" style={styles.addFarmForm} >
+                <InputLabel>Character</InputLabel>
+                <Select
+                    label="Character"
+                    value={this.state.characterValue}
+                    onChange={(e) => this.handleCharacterChange(e)}
                 >
-                    <Select
-                        floatingLabelText="Character"
-                        value={this.state.characterValue}
-                        onChange={(e, i, v) => this.handleCharacterChange(e, i, v)}
-                    >
-                        {Object.values(Character.getAll()).sort((a, b) => b.getTotalSp() - a.getTotalSp()).map(character => {
-                            return (<MenuItem key={character.id} value={character.id} primaryText={character.name} />)
-                        })}
-                    </Select>
-                    
-                    
-                    <TextField
-                        //Account Name goes here
-                        floatingLabelText="Account Name"
-                        type="text"
-                        value={this.state.accountName}
-                        onChange={(e, v) => this.handleAccountChange(e, v)}
-                                            
-                    />
-
-                    <TextField
-                        type="number"
-                        value={this.state.baseSpValue}
-                        floatingLabelText="Base Character SP"
-                        onChange={(e, v) => this.handleBaseSpChange(e, v)}
-                    />
-                </Dialog>
-            </div>
-        );
+                    {Object.values(Character.getAll()).sort((a, b) => b.getTotalSp() - a.getTotalSp()).map(character => {
+                        return (<MenuItem key={character.id} value={character.id}>{character.name}</MenuItem>)
+                    })}
+                </Select>
+            </FormControl>
+            <FormControl style={styles.addFarmForm}>
+                <TextField
+                    //Account Name goes here
+                    label="Account Name"
+                    variant="outlined"
+                    value={this.state.accountName}
+                    onChange={(e) => this.handleAccountChange(e)}
+                                        
+                />
+            </FormControl>
+            <FormControl style={styles.addFarmForm}>
+                <TextField
+                    label="Base Character SP"
+                    variant="outlined"
+                    type="number"
+                    value={this.state.baseSpValue}
+                    onChange={(e) => this.handleBaseSpChange(e)}
+                />
+            </FormControl>
+                <DialogActions>
+                    <Button label="Cancel" primary={true} onClick={(e) => this.handleClose(e)}>Cancel</Button>
+                    <Button label="Add" primary={true} onClick={(e) => this.handleAdd(e)}>Add</Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+    );
     }
 }
