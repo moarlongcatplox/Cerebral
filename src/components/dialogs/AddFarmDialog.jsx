@@ -1,6 +1,7 @@
 'use strict';
 //material-ui
-import { IconButton, Dialog, Button, Icon, Select, TextField, MenuItem, FormControl, InputLabel, DialogActions, DialogTitle, DialogContent} from '@material-ui/core';
+import { List, ListItem, ListItemIcon, ListItemText, IconButton, Dialog, Button, Icon, Select, TextField, MenuItem, FormControl, InputLabel, DialogActions, DialogTitle, DialogContent} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 //local
 import Character from '../../models/Character';
@@ -12,142 +13,131 @@ import React from 'react';
 //---------------------------------end imports---------------------------------
 
 
-const styles = {
-    addFarmButton: {
-        margin: '20px 0 20px 20px',
-        position: 'absolute',
-        left: -10,
-        top: 200,
-        zIndex: 1200,
-    },
-    closeIcon: {
-        cursor:'pointer',
-        position: 'absolute',
-        right: 1,
-        top: 1,
-    },
-    addFarmDialog: {
-        width: 350
-    },
-    addFarmForm: {
-        margin: '15px'
-    }
-};
+const useStyles = makeStyles((theme) => ({
+        addFarmButton: {
+            margin: '20px 0 20px 20px',
+            position: 'absolute',
+            left: -10,
+            top: 200,
+            zIndex: 1200,
+            width: '200px'
+        },
+        closeIcon: {
+            cursor:'pointer',
+            position: 'absolute',
+            right: 1,
+            top: 1,
+        },
+        addFarmForm: {
+            marginTop: theme.spacing(2),
+            borderColor: 'green',
+        }
+  }));
+  
+export default function FormDialog() {
+    const classes = useStyles();
+    //form field default states
+    const [open, setOpen] = React.useState(false);
+    const [characterValue, setCharacterValue] = React.useState('');
+    const [accountValue, setAccountValue] = React.useState('');
+    const [baseSpValue, setBaseSp] = React.useState('5000000');
 
-export default class AddFarmDialog extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: false,
-            characterValue: 0,
-            accountName: ' ',
-            baseSpValue: 5000000
-        };
-    }
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    handleCharacterChange(e) {
-        this.setState({characterValue: e.target.value});
-    }
-
-    handleBaseSpChange(e) {
-        this.setState({baseSpValue: e.target.value});
-    }
-
-    //Attempt at adding account name box information
-    handleAccountChange(e){
-        this.setState({accountName: e.target.value})
-    }
-
-    handleOpen(e) {
-        this.setState({open: true});
-    };
-
-    handleClose(e) {
-        this.setState({
-            open: false,
-            characterValue: 0,
-            //leave accountName the same so it's already populated when/if a new character is added
-            //accountName: '',
-            baseSpValue: 5000000
-        });
-    };
-
-    //TODO add error handling for improper account names (sorta done)
-    handleAdd(e) {
-        if ((typeof this.state.characterValue !== 'string') || (this.state.characterValue === '') || (this.state.baseSpValue === '' || (this.state.accountName === ''))) {
-            alert("Failed to add/update farm, please ensure you filled out the form correctly and try again");
+  //form field handlers, removes the need for this.nonsense
+  const handleCharacterChange = (event) => {
+    setCharacterValue(event.target.value);
+  };
+  const handleAccountChange = (event) => {
+    setAccountValue(event.target.value);
+  };
+  const handleBaseSpChange = (event) => {
+    setBaseSp(event.target.value);
+  };
+  //adds character with selected fields to SP farm
+  const handleCharacterAdd = (event) => {
+    if ((typeof characterValue !== 'string') || (characterValue === '') || (baseSpValue === '' || (accountValue === ''))) {
+        alert("Failed to add/update farm, please ensure you filled out the form correctly and try again");
+    } else {
+        if (typeof baseSpValue === 'string') {
+            FarmHelper.addFarm(characterValue, accountValue, parseInt(baseSpValue));
+            handleClose();
+        } else if (baseSpValue === 'number') {
+            FarmHelper.addFarm(characterValue, accountValue, baseSpValue);
+            handleClose();
         } else {
-            if (typeof this.state.baseSpValue === 'string') {
-                FarmHelper.addFarm(this.state.characterValue, this.state.accountName, parseInt(this.state.baseSpValue));
-                this.handleClose(e);
-            } else if (typeof this.state.baseSpValue === 'number') {
-                FarmHelper.addFarm(this.state.characterValue, this.state.accountName, this.state.baseSpValue);
-                this.handleClose(e);
-            } else {
-                alert("Failed to add/update farm, please ensure you filled out the form correctly and try again");
-            }
+            alert("Failed to add/update farm, please ensure you filled out the form correctly and try again");
         }
     };
+}
+//cheap hack below to put the "Manage Farm" button on the leftnav bar.
+  return (
+    <div>
+      <div className={classes.addFarmButton}>
+          <List >
+            <ListItem button key="Authorize" onClick={handleClickOpen}>
+                <ListItemIcon> <Icon>person_add</Icon></ListItemIcon>
+                <ListItemText primary="Manage Farm" />
+            </ListItem> 
+          </List>
+      </div>
 
-    render() {
-    return (
-        <div>
-            <Button variant="contained" style={styles.addFarmButton}
-                label="Add/Update Farm"
-                onClick={(e) => this.handleOpen(e)}
-                style={styles.addFarmButton}
-            >
-            <Icon>note_add</Icon> Add/Update Farm
-            </Button>
-
-            <Dialog
-                title="Add Character as SP Farm"
-                open={this.state.open}
-                onClose={(e) => this.handleClose(e)}
-                fullWidth = {true}
-       
-            >
-            <DialogTitle>
-                <div>Add Farm <IconButton style={styles.closeIcon} onClick={() => this.setState({ open: false })}><Icon>close</Icon></IconButton></div>
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" maxWidth="sm" fullWidth>
+      <DialogTitle id="form-dialog-title">
+                <div>Add Character to SP Farm <IconButton className={classes.closeIcon} onClick={handleClose}><Icon>close</Icon></IconButton></div>
             </DialogTitle>
-
-            <FormControl variant="outlined" style={styles.addFarmForm} >
+        <DialogContent>
+          
+          <FormControl variant="outlined" fullWidth >
                 <InputLabel>Character</InputLabel>
                 <Select
                     label="Character"
-                    value={this.state.characterValue}
-                    onChange={(e) => this.handleCharacterChange(e)}
+                    autoWidth
+                    value={characterValue}
+                    onChange={handleCharacterChange}
+                    MenuProps={{
+                        getContentAnchorEl: null,
+                        anchorOrigin: {
+                          vertical: "center",
+                          horizontal: "center",
+                        }
+                      }}
                 >
                     {Object.values(Character.getAll()).sort((a, b) => b.getTotalSp() - a.getTotalSp()).map(character => {
                         return (<MenuItem key={character.id} value={character.id}>{character.name}</MenuItem>)
                     })}
                 </Select>
             </FormControl>
-            <FormControl style={styles.addFarmForm}>
+            <FormControl className={classes.addFarmForm} fullWidth>
                 <TextField
                     //Account Name goes here
                     label="Account Name"
                     variant="outlined"
-                    value={this.state.accountName}
-                    onChange={(e) => this.handleAccountChange(e)}
-                                        
+                    value={accountValue}
+                    onChange={handleAccountChange}
                 />
             </FormControl>
-            <FormControl style={styles.addFarmForm}>
+            <FormControl className={classes.addFarmForm} >
                 <TextField
                     label="Base Character SP"
                     variant="outlined"
                     type="number"
-                    value={this.state.baseSpValue}
-                    onChange={(e) => this.handleBaseSpChange(e)}
+                    value={baseSpValue}
+                    onChange={handleBaseSpChange}
                 />
             </FormControl>
-                <DialogActions>
-                    <Button label="Cancel" primary={true} onClick={(e) => this.handleClose(e)}>Cancel</Button>
-                    <Button label="Add" primary={true} onClick={(e) => this.handleAdd(e)}>Add</Button>
-                </DialogActions>
-            </Dialog>
-        </div>
-    );
-    }
+
+        </DialogContent>
+        <DialogActions>
+            <Button label="Cancel" onClick={handleClose}>Cancel</Button>
+            <Button label="Add" onClick={handleCharacterAdd}>Add</Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
 }

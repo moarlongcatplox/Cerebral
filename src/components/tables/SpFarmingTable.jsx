@@ -17,7 +17,6 @@ import {Redirect} from 'react-router';
 
 const styles = {
     charactersTable: {
-        height: 'calc(100vh - 300px)',
         width: '95%',
         backgroundColor: 'rgba(75, 75, 75, 0.5)',
     },
@@ -38,7 +37,7 @@ const styles = {
         paddingLeft: 6,
     },
     farmTableContainer: {
-        maxHeight:'calc(100vh - 80px)',
+        maxHeight:'calc(100vh - 70px)',
         backgroundColor: 'rgba(0, 0, 0, 0)',
     }
 
@@ -50,7 +49,10 @@ export default class SpFarmingTable extends React.Component {
         this.state = {
             characters: FarmCharacter.getAll(),
             ticking: true,
-            redirectPath: undefined
+            redirectPath: undefined,
+            injectorsReady: Object.values(FarmCharacter.getAll()).reduce((count, char) => {
+                return count + (Character.get(char.id).getInjectorsReady(char.baseSp));
+            }, 0),
         };
     }
     
@@ -106,11 +108,11 @@ export default class SpFarmingTable extends React.Component {
                         <TableCell style={styles.farmRowColumn}><small>Account Name</small></TableCell>
                         <TableCell style={styles.farmRowColumn}><strong>Next Injector</strong></TableCell>
                         <TableCell style={styles.farmRowColumn}><strong>SP/hour</strong></TableCell>
-                        <TableCell style={styles.farmRowColumn}><strong>Available</strong><small> (XXX)</small></TableCell>
+                        <TableCell style={styles.farmRowColumn}><strong>Available</strong><small> ({this.state.injectorsReady})</small></TableCell>
                     </TableRow>
                 </TableHead>
 
-                <TableBody displayRowCheckbox={false}>
+                <TableBody>
                     {this.state.characters.map(farmChar => {
                     const char = Character.get(farmChar.id);
                     const currentSkill = char.getCurrentSkill();
